@@ -9,30 +9,53 @@ const DialogItem = (props) => {
 
     return (
         <div className={s.dialog}>
-            <NavLink to={path}>{props.name}</NavLink> 
+            <NavLink to={path}>{props.name}</NavLink>
         </div>
     )
 }
 
 const Message = (props) => {
     return (
-        <div className={s.message}>{props.message}</div>
+        <div className={s.message}>{props.text}</div>
     )
 }
 
 const Dialogs = () => {
+
+    const dialogs = [
+        { id: "1", name: "Yura" },
+        { id: "2", name: "Bohdan" },
+        { id: "3", name: "Ihor" },
+        { id: "4", name: "Alex" }
+    ];
+
+    const messages = [
+        { id: "1", message: "Hi" },
+        { id: "2", message: "Hello" },
+        { id: "3", message: "Merci" },
+        { id: "4", message: "Yeah" }
+    ];
+
+    const dialogElement = dialogs.map((d) => {
+        return (
+            <DialogItem id={d.id} name={d.name} />
+        )   
+    });
+
+    const messageElement = messages.map((m) => {
+        return (
+            <Message id={m.id} text={m.message} />
+        )   
+    });
+
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogItem}>
-                <DialogItem name="Yura" id="1"/>
-                <DialogItem name="Bohdan" id="2"/>
-                <DialogItem name="Ihor" id="3"/>
-                <DialogItem name="Alex" id="4"/>
+                {dialogElement}
             </div>
             <div className={s.messages}>
-                <Message message="Hi"/>
-                <Message message="Hello"/>
-                <Message message="Merci"/>
+                {messageElement}
             </div>
         </div>
     )

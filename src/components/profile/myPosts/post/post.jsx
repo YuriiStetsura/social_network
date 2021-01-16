@@ -1,10 +1,10 @@
 import React from 'react';
 //import s from './post.module.css';
 
-const Post = () => {
+const Post = (props) => {
     return (
         <div>
-            Post 1
+            {props.post}  {props.likeCount}
         </div>
     )
 }
