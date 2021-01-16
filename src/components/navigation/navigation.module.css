@@ -1,0 +1,14 @@
+.nav {
+    grid-area: nav;
+    background-color:aliceblue;;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.item a {
+    color:rgb(107, 107, 107);
+}
+
+.item a.activeLink {
+    color :rebeccapurple;
+}

@@ -1,0 +1,24 @@
+.profileImg {
+    grid-area: profileImg;
+    
+}
+
+.profileImg img {
+    width: 100%;
+    height: 300px;
+}
+
+.panel{
+    position: absolute;
+    width: 950px;
+    height: 50px;
+    margin-top: 230px;
+    opacity: 80%;
+    z-index: 1;
+    background-color: black;
+}
+
+.panel .menu {
+    position: absolute;
+    z-index: 10;
+}

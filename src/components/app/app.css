@@ -1,0 +1,23 @@
+.app-wrapper {
+    width: 950px;
+    margin: 0 auto 0 auto;
+    height: 750px;
+
+    display: grid;
+    grid-template-areas: 
+    "header header header"
+    "profileImg profileImg profileImg"
+    "nav content rSider";
+    grid-template-rows: 60px 300px 1fr;
+    grid-template-columns: 2fr 8fr 2fr;
+    grid-gap: 8px;
+}
+
+
+.app-wrapper-content {
+    grid-area: content;
+    background-color:Snow;
+}
+
+
+
