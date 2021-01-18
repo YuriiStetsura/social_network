@@ -4,12 +4,10 @@
 }
 
 .dialogItem {
+    margin: 0 auto;
+    margin-top: 10px;
 }
 
-.dialog {
-    padding: 10px;
-    color:white;
-}
 
 .dialogItem .active{
     color :seashell;
@@ -17,8 +15,4 @@
 
 .messages{
      
-}
-
-.messages .message{
-    padding: 10px;
 }

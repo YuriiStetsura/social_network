@@ -17,7 +17,9 @@ import RightSider from '../right-sider/rightSider';
 import ProfileImg from '../profileImg/profileImg';
 
 
-const App = () => {
+
+const App = (props) => {
+    
     return(
         <BrowserRouter>
             <div className="app-wrapper">
@@ -25,8 +27,10 @@ const App = () => {
                 <ProfileImg />
                 <Navigation />
                 <div className="app-wrapper-content">
-                    <Route path="/profile" component={Profile} />
-                    <Route path="/dialogs" component={Dialogs} />
+                    <Route path="/profile" 
+                           render={() => <Profile state={props.state.profilePage}
+                                                  addPost={props.addPost} />} />
+                    <Route path="/dialogs" render={() => <Dialogs state={props.state.dialogsPage} / >} />
                     <Route path="/news" component={News} />
                     <Route path="/music" component={Music} />
                     <Route path="/settings" component={Settings} />

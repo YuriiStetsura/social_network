@@ -1,52 +1,36 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import DialogItem from './dialogItem/dialogItem';
 
 import s from './dialogs.module.css';
+import Message from './messageItem/messageItem';
 
-const DialogItem = (props) => {
+import { Avatar } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 
-    let path = "/dialog/" + props.id;
-
-    return (
-        <div className={s.dialog}>
-            <NavLink to={path}>{props.name}</NavLink>
-        </div>
-    )
-}
-
-const Message = (props) => {
-    return (
-        <div className={s.message}>{props.text}</div>
-    )
-}
-
-const Dialogs = () => {
-
-    const dialogs = [
-        { id: "1", name: "Yura" },
-        { id: "2", name: "Bohdan" },
-        { id: "3", name: "Ihor" },
-        { id: "4", name: "Alex" }
-    ];
-
-    const messages = [
-        { id: "1", message: "Hi" },
-        { id: "2", message: "Hello" },
-        { id: "3", message: "Merci" },
-        { id: "4", message: "Yeah" }
-    ];
-
-    const dialogElement = dialogs.map((d) => {
+const Dialogs = (props) => {
+    
+    const dialogElement = props.state.dialogs.map((d) => {
         return (
-            <DialogItem id={d.id} name={d.name} />
+            <>
+                <Avatar size={60} icon={<UserOutlined />} />
+                <DialogItem id={d.id} name={d.name} />
+            </>
         )   
     });
 
-    const messageElement = messages.map((m) => {
+    const messageElement = props.state.messages.map((m) => {
         return (
             <Message id={m.id} text={m.message} />
         )   
     });
+
+    let newMessage = React.createRef();
+
+    let addMessage = () => {
+        let text = newMessage.current.value;
+        alert(text);
+    }
 
 
     return (
@@ -56,7 +40,15 @@ const Dialogs = () => {
             </div>
             <div className={s.messages}>
                 {messageElement}
+                <div>
+                    <textarea ref={newMessage}></textarea>
+                </div>
+                <div>
+                    <Button type="primary" ghost onClick={ addMessage }>Опублікувати</Button>
+                </div>
+                
             </div>
+            
         </div>
     )
 }

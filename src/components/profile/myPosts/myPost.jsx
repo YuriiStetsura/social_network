@@ -6,26 +6,35 @@ import { Input } from 'antd';
 import Post from './post/post'
 import { Button } from 'antd';
 
+
 const { TextArea } = Input;
 
-const MyPost = () => {
+const MyPost = (props) => {
 
-    const posts = [
-        { id: "1", post: "Yura", likeCount: "5" },
-        { id: "2", post: "Bohdan", likeCount: "10" },
-        { id: "3", post: "Ihor", likeCount: "25" },
-        { id: "4", post: "Alex", likeCount: "7" }
-    ];
+    const postElement = props.posts.map(p => <Post post={p.post} likeCount={p.likeCount} /> );
 
-    const postElement = posts.map(p => <Post post={p.post} likeCount={p.likeCount} />)
+    let newPostElement = React.createRef();
+
+    let addPost = () => {
+        debugger;
+        let text = newPostElement.current.value;
+        props.addPost(text);
+        newPostElement.current.value = '';
+    }
 
     return (
         <div>
             <h3>My Posts</h3>
             <div>
                 New Posts
-                <TextArea showCount maxLength={100} />
-                <Button type="primary" ghost>Опублікувати</Button>
+                <div>
+                    <textarea ref={newPostElement}></textarea>
+                    {/* <button onClick={ addPost }>dcw</button> */}
+                    {/* <TextArea ref={newPostElement} showCount maxLength={100} /> */}
+                    <div>
+                        <Button type="primary" ghost onClick={ addPost }>Опублікувати</Button>
+                    </div>  
+                </div>
             </div>
             <div>
                 {postElement}
