@@ -10,7 +10,7 @@ import { Button } from 'antd';
 
 const Dialogs = (props) => {
     
-    const dialogElement = props.state.dialogs.map((d) => {
+    const dialogElement = props.dialogsPage.dialogs.map((d) => {
         return (
             <>
                 <Avatar size={60} icon={<UserOutlined />} />
@@ -19,7 +19,7 @@ const Dialogs = (props) => {
         )   
     });
 
-    const messageElement = props.state.messages.map((m) => {
+    const messageElement = props.dialogsPage.messages.map((m) => {
         return (
             <Message id={m.id} text={m.message} />
         )   
@@ -28,8 +28,13 @@ const Dialogs = (props) => {
     let newMessage = React.createRef();
 
     let addMessage = () => {
+        props.addMessage();
+        props.updateNewPostMessage('');
+    }
+
+    let onMessageChange = () => {
         let text = newMessage.current.value;
-        alert(text);
+        props.updateNewPostMessage(text);
     }
 
 
@@ -41,7 +46,10 @@ const Dialogs = (props) => {
             <div className={s.messages}>
                 {messageElement}
                 <div>
-                    <textarea ref={newMessage}></textarea>
+                    <textarea onChange={onMessageChange} 
+                              value={props.dialogsPage.newPostMessage} 
+                              ref={newMessage} 
+                    />
                 </div>
                 <div>
                     <Button type="primary" ghost onClick={ addMessage }>Опублікувати</Button>
