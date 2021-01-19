@@ -19,7 +19,7 @@ import ProfileImg from '../profileImg/profileImg';
 
 
 const App = (props) => {
-    
+ 
     return(
         <BrowserRouter>
             <div className="app-wrapper">
@@ -34,7 +34,8 @@ const App = (props) => {
                     <Route path="/dialogs" 
                            render={() => <Dialogs dialogsPage={props.state.dialogsPage}
                                                   updateNewPostMessage={props.updateNewPostMessage}
-                                                  addMessage={props.addMessage} />} />
+                                                  addMessage={props.addMessage}
+                                                   />} />
                     <Route path="/news" component={News} />
                     <Route path="/music" component={Music} />
                     <Route path="/settings" component={Settings} />

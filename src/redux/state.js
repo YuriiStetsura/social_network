@@ -1,8 +1,6 @@
-let rerenderEntireTree = () => {
-    console.log('State changed');
-}
 
-const state = {
+let store = {
+  _state : {
     profilePage : {
       posts : [
         { id: "1", post: "Yura", likeCount: "5" },
@@ -32,46 +30,54 @@ const state = {
       newPostMessage : ''
 
     }   
-}
+  },
 
-export let addPost = () => {
+  getState() {
+    return this._state;
+  },
+
+  _callSubscriber() {
+    console.log('State changed');
+  },
+
+  addPost() {
     let newPost = {
       id : 5,
-      post : state.profilePage.newPostText,
+      post : this._state.profilePage.newPostText,
       likeCount : 0
     };
 
-    state.profilePage.posts.push(newPost);
-    rerenderEntireTree(state);
-}
+    this._state.profilePage.posts.push(newPost);
+    this._callSubscriber(this._state);
+  },
 
-export let updateNewPostText = (newText) => {
+  updateNewPostText(newText) {
+    this._state.profilePage.newPostText = newText;
+    this._callSubscriber(this._state);
+  },
 
-  state.profilePage.newPostText = newText;
-  rerenderEntireTree(state);
-}
+  updateNewPostMessage(newText) {
+    this._state.dialogsPage.newPostMessage = newText;
+    this._callSubscriber(this._state);
+  },
 
-export let updateNewPostMessage = (newText) => {
-    state.dialogsPage.newPostMessage = newText;
-    rerenderEntireTree(state);
-}
-
-export let addMessage = () => {
+  addMessage() {
     let newMessage = {
         id: '5',
-        message: state.dialogsPage.newPostMessage
+        message: this._state.dialogsPage.newPostMessage
     }
 
-    state.dialogsPage.messages.push(newMessage);
-    rerenderEntireTree(state);
+    this._state.dialogsPage.messages.push(newMessage);
+    this._callSubscriber(this._state);
+  },
+
+  subscribe(observer) {
+    this._callSubscriber = observer;
+  }  
+
 }
 
-export const subscribe = (observer) => {
-    rerenderEntireTree = observer;
-} 
-
-
-export default state;
+export default store;
 
   
   
