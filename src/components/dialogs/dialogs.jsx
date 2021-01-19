@@ -25,18 +25,17 @@ const Dialogs = (props) => {
         )   
     });
 
-    let newMessage = React.createRef();
+    let inputMessage = React.createRef();
+
+    let onMessageChange = () => {
+        let text = inputMessage.current.value;
+        props.updateNewPostMessage(text);
+    }
 
     let addMessage = () => {
         props.addMessage();
         props.updateNewPostMessage('');
     }
-
-    let onMessageChange = () => {
-        let text = newMessage.current.value;
-        props.updateNewPostMessage(text);
-    }
-
 
     return (
         <div className={s.dialogs}>
@@ -46,13 +45,14 @@ const Dialogs = (props) => {
             <div className={s.messages}>
                 {messageElement}
                 <div>
-                    <textarea onChange={onMessageChange} 
-                              value={props.dialogsPage.newPostMessage} 
-                              ref={newMessage} 
-                    />
+                    <textarea onChange={onMessageChange}
+                              value={props.dialogsPage.newPostMessage}
+                              ref={inputMessage}/>
                 </div>
                 <div>
-                    <Button type="primary" ghost onClick={ addMessage }>Опублікувати</Button>
+                    <Button onClick={addMessage}
+                            type="primary" 
+                            ghost>Опублікувати</Button>
                 </div>
                 
             </div>

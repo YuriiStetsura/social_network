@@ -10,7 +10,7 @@ import { Button } from 'antd';
 const { TextArea } = Input;
 
 const MyPost = (props) => {
-
+    console.log(props.new)
     const postElement = props.posts.map(p => <Post post={p.post} likeCount={p.likeCount} /> );
 
     let newPostElement = React.createRef();
