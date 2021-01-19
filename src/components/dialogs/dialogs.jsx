@@ -8,6 +8,8 @@ import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
+import {updateNewMessageActionCreator, addMessageActionCreator} from '../../redux/state'
+
 const Dialogs = (props) => {
     
     const dialogElement = props.dialogsPage.dialogs.map((d) => {
@@ -29,12 +31,12 @@ const Dialogs = (props) => {
 
     const updateNewPostMessage = () => {
         let text = inputMessage.current.value;
-        props.dispatch({ type: 'UPDATE-NEW_MESSAGE', newText: text});
+        props.dispatch(updateNewMessageActionCreator(text));
     }
 
     const addMessage = () => {
-        props.dispatch({ type: 'ADD-MESSAGE'});
-        props.dispatch({ type: 'UPDATE-NEW_MESSAGE', newText: ''});
+        props.dispatch(addMessageActionCreator());
+        props.dispatch(updateNewMessageActionCreator(''));
     }
 
     return (

@@ -6,6 +6,7 @@ import { Input } from 'antd';
 import Post from './post/post'
 import { Button } from 'antd';
 
+import { updateNewPostMessageActionCreator, addPostActionCreator } from '../../../redux/state';
 
 const { TextArea } = Input;
 
@@ -16,13 +17,13 @@ const MyPost = (props) => {
     let newPostElement = React.createRef();
 
     let addPost = () => {
-        props.dispatch({ type: 'ADD-POST'});
-        props.dispatch({ type: 'UPDATE-NEW_POST', newText: ''});
+        props.dispatch(addPostActionCreator());
+        props.dispatch(updateNewPostMessageActionCreator(''));
     }
 
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        props.dispatch({ type: 'UPDATE-NEW_POST', newText: text});
+        props.dispatch(updateNewPostMessageActionCreator(text));
     }
 
     return (
