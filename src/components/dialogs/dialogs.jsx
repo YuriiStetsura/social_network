@@ -29,12 +29,12 @@ const Dialogs = (props) => {
 
     const updateNewPostMessage = () => {
         let text = inputMessage.current.value;
-        props.updateNewPostMessage(text);
+        props.dispatch({ type: 'UPDATE-NEW_MESSAGE', newText: text});
     }
 
     const addMessage = () => {
-        props.addMessage();
-        props.updateNewPostMessage('');
+        props.dispatch({ type: 'ADD-MESSAGE'});
+        props.dispatch({ type: 'UPDATE-NEW_MESSAGE', newText: ''});
     }
 
     return (

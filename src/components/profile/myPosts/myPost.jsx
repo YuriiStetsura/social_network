@@ -10,18 +10,19 @@ import { Button } from 'antd';
 const { TextArea } = Input;
 
 const MyPost = (props) => {
+    
     const postElement = props.posts.map(p => <Post post={p.post} likeCount={p.likeCount} /> );
 
     let newPostElement = React.createRef();
 
     let addPost = () => {
-        props.addPost();
-        props.updateNewPostText('');
+        props.dispatch({ type: 'ADD-POST'});
+        props.dispatch({ type: 'UPDATE-NEW_POST', newText: ''});
     }
 
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        props.updateNewPostText(text);
+        props.dispatch({ type: 'UPDATE-NEW_POST', newText: text});
     }
 
     return (
