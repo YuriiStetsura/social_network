@@ -8,7 +8,7 @@ import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
-import {updateNewMessageActionCreator, addMessageActionCreator} from '../../redux/state'
+import {updateNewMessageActionCreator, addMessageActionCreator} from '../.././redux/dialogs-reducer';
 
 const Dialogs = (props) => {
     

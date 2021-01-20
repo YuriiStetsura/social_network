@@ -6,7 +6,7 @@ import { Input } from 'antd';
 import Post from './post/post'
 import { Button } from 'antd';
 
-import { updateNewPostMessageActionCreator, addPostActionCreator } from '../../../redux/state';
+import { updateNewPostMessageActionCreator, addPostActionCreator } from '../../../redux/profile-reducer';
 
 const { TextArea } = Input;
 
