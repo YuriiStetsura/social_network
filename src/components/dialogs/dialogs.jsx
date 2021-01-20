@@ -8,11 +8,9 @@ import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
-import {updateNewMessageActionCreator, addMessageActionCreator} from '../.././redux/dialogs-reducer';
-
 const Dialogs = (props) => {
     
-    const dialogElement = props.dialogsPage.dialogs.map((d) => {
+    const dialogElement = props.dialogs.map((d) => {
         return (
             <>
                 <Avatar size={60} icon={<UserOutlined />} />
@@ -21,7 +19,7 @@ const Dialogs = (props) => {
         )   
     });
 
-    const messageElement = props.dialogsPage.messages.map((m) => {
+    const messageElement = props.messages.map((m) => {
         return (
             <Message id={m.id} text={m.message} />
         )   
@@ -31,12 +29,11 @@ const Dialogs = (props) => {
 
     const updateNewPostMessage = () => {
         let text = inputMessage.current.value;
-        props.dispatch(updateNewMessageActionCreator(text));
+        props.updateNewPostMessage(text);
     }
 
-    const addMessage = () => {
-        props.dispatch(addMessageActionCreator());
-        props.dispatch(updateNewMessageActionCreator(''));
+    const onAddMessage = () => {
+        props.addMessage();
     }
 
     return (
@@ -48,11 +45,11 @@ const Dialogs = (props) => {
                 {messageElement}
                 <div>
                     <textarea onChange={updateNewPostMessage} 
-                              value={props.dialogsPage.newPostMessage}
+                              value={props.newPostMessage}
                               ref={inputMessage} />
                 </div>
                 <div>
-                    <Button onClick={addMessage}
+                    <Button onClick={onAddMessage}
                             type="primary" 
                             ghost>Опублікувати</Button>
                 </div>

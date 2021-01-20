@@ -6,7 +6,6 @@ import { Input } from 'antd';
 import Post from './post/post'
 import { Button } from 'antd';
 
-import { updateNewPostMessageActionCreator, addPostActionCreator } from '../../../redux/profile-reducer';
 
 const { TextArea } = Input;
 
@@ -16,14 +15,13 @@ const MyPost = (props) => {
 
     let newPostElement = React.createRef();
 
-    let addPost = () => {
-        props.dispatch(addPostActionCreator());
-        props.dispatch(updateNewPostMessageActionCreator(''));
+    let onAddPost = () => {
+        props.addPost();
     }
 
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        props.dispatch(updateNewPostMessageActionCreator(text));
+        props.updateNewPostText(text);
     }
 
     return (
@@ -36,10 +34,8 @@ const MyPost = (props) => {
                               value={props.newPostText}
                               ref={newPostElement}>
                     </textarea>
-                    {/* <button onClick={ addPost }>dcw</button> */}
-                    {/* <TextArea ref={newPostElement} showCount maxLength={100} /> */}
                     <div>
-                        <Button type="primary" ghost onClick={ addPost }>Опублікувати</Button>
+                        <Button type="primary" ghost onClick={ onAddPost }>Опублікувати</Button>
                     </div>  
                 </div>
             </div>
