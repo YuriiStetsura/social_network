@@ -28,12 +28,11 @@ const App = (props) => {
                 <Navigation />
                 <div className="app-wrapper-content">
                     <Route path="/profile" 
-                           render={() => <Profile store={props.store}
-                                                  profilePage={props.state.profilePage}
-                                                  dispatch={props.dispatch} />} />
+                           render={() => <Profile
+                                         />} />
                     <Route path="/dialogs" 
-                           render={() => <DialogsContainer store={props.store}
-                                                   />} />
+                           render={() => <DialogsContainer 
+                                         />} />
                     <Route path="/news" component={News} />
                     <Route path="/music" component={Music} />
                     <Route path="/settings" component={Settings} />

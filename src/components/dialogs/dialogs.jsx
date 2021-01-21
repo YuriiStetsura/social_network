@@ -8,8 +8,9 @@ import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
+
 const Dialogs = (props) => {
-    
+
     const dialogElement = props.dialogs.map((d) => {
         return (
             <>
@@ -27,7 +28,7 @@ const Dialogs = (props) => {
 
     let inputMessage = React.createRef();
 
-    const updateNewPostMessage = () => {
+    const onUpdateNewPostMessage = () => {
         let text = inputMessage.current.value;
         props.updateNewPostMessage(text);
     }
@@ -44,7 +45,7 @@ const Dialogs = (props) => {
             <div className={s.messages}>
                 {messageElement}
                 <div>
-                    <textarea onChange={updateNewPostMessage} 
+                    <textarea onChange={onUpdateNewPostMessage} 
                               value={props.newPostMessage}
                               ref={inputMessage} />
                 </div>
