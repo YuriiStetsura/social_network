@@ -32,6 +32,11 @@ const Navigation = () => {
                              activeClassName={s.activeLink}>
                     Settings</NavLink>
                 </div>
+                <div className={s.item}>
+                    <NavLink to="/users"
+                             activeClassName={s.activeLink}>
+                    Users</NavLink>
+                </div>
             </nav>
     )
 }

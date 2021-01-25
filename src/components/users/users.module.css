@@ -1,0 +1,59 @@
+.user {
+    margin-top: 10px;
+    /* background-color: aliceblue; */
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+    grid-template-rows: 2fr 1fr;
+    grid-template-areas:
+    "avatar content"
+    "subscribe content";
+    gap: 5px;
+    padding: 5px;
+}
+
+.avatar {
+    grid-area: avatar;
+    justify-self: center; 
+}
+
+.subscribe {
+    grid-area: subscribe;
+    align-self: center;
+    justify-self: center; 
+}
+
+.content {
+    border-style: double;
+    border-radius: 15px;
+    border-color:cadetblue;
+    grid-area: content;
+    display:grid;
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+    "name country"
+    "status city"
+}
+
+.profileName {
+    grid-area: name;
+    padding: 10px;
+}
+
+.status {
+    grid-area: status;
+    padding: 10px;
+}
+
+.country {
+    grid-area: country;
+    justify-self:right;
+    padding: 5px;
+}
+
+.city {
+    grid-area: city;
+    justify-self:right;
+    padding: 5px;
+}
+

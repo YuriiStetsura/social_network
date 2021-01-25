@@ -16,9 +16,10 @@ import Settings from '../settings/settings';
 import RightSider from '../right-sider/rightSider';
 import ProfileImg from '../profileImg/profileImg';
 import DialogsContainer from '../dialogs/dialogsContainer';
+import UsersContainer from '../users/usersContainer';
 
 
-const App = (props) => {
+const App = () => {
     
     return(
         <BrowserRouter>
@@ -36,6 +37,8 @@ const App = (props) => {
                     <Route path="/news" component={News} />
                     <Route path="/music" component={Music} />
                     <Route path="/settings" component={Settings} />
+                    <Route path="/users" 
+                           render={() => <UsersContainer />} />
                 </div>  
                 <RightSider />  
             </div>
