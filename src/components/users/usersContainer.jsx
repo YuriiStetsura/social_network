@@ -1,6 +1,10 @@
+import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { followedAC, pageChangeAC, setUserdAC, totalUsersCountAC, unfollowedAC } from "../../redux/users-reducer";
-import Users from "./users";
+import Users from "./usersApiContainer";
+import * as axios from 'axios';
+import UsersApiContainer from "./usersApiContainer";
+
 
 let mapStateToProps = (state) => {
     return {
@@ -25,12 +29,14 @@ let mapDispatchToProps = (dispatch) => {
         setUsersTotalCount : (count) => {
             dispatch(totalUsersCountAC(count));
         },
-        onPageChange : (current) => {
+        pageChange : (current) => {
             dispatch(pageChangeAC(current));
         }
     }
 }
 
-let UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+let UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersApiContainer);
+
+
 
 export default UsersContainer;
