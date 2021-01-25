@@ -3,26 +3,56 @@ import { Button } from 'antd';
 import { Avatar } from 'antd';
 import s from './users.module.css';
 import * as axios from 'axios';
+import { Pagination } from 'antd';
 
 class Users extends Component {
     
-    getUser = () => {
-        if (this.props.users.length === 0) {
-            axios.get("https://social-network.samuraijs.com/api/1.0/users")
+
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+                .then(response => {
+                    this.props.setUser(response.data.items);
+                    this.props.setUsersTotalCount(response.data.totalCount);
+                    console.log(response.data.items);
+                });
+    }
+
+    onPageChange(p) {
+        this.props.onPageChange(p);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.pageSize}`)
                 .then(response => {
                     this.props.setUser(response.data.items);
                 });
-        }
     }
 
     render() {
+        
+        // let allPage = [];
+
+        // for(let i = 1 ; i <= this.props.totalCount; i++) {
+        //     allPage.push(i);
+        // }
+
         return <>
-            <button onClick={this.getUser}>Get Users</button>
+            {/* <div>
+                {
+                    allPage.map(p => 
+                    <span onClick={() => { this.onPageChange(p) }}>{p + " "}</span> 
+                )}
+            </div> */}
+            <div className={s.pagination}>
+                <Pagination onChange={(e) => { this.onPageChange(e) }} 
+                            defaultCurrent={1} 
+                            total={this.props.totalCount} 
+                            pageSizeOptions={[5]}
+                            pageSize={5}
+                />
+            </div>
             {
                 this.props.users.map(u =>
                     <div key={u.id} className={s.user}>
                         <div className={s.avatar}>
-                            <Avatar size={80} src={u.imgSrc} />
+                            <Avatar size={80} src={u.photos.small} />
                         </div>
                         <div className={s.subscribe}>
                             {u.followed

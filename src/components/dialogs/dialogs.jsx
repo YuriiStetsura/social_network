@@ -10,7 +10,7 @@ import { Button } from 'antd';
 
 
 const Dialogs = (props) => {
-
+    
     const dialogElement = props.dialogs.map((d) => {
         return (
             <>
