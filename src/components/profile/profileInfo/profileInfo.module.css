@@ -1,0 +1,10 @@
+.userInfo {
+    display: grid;
+    grid-template-columns: 1fr 7fr;
+    gap: 20px;
+}
+
+.profileAvatar {
+    align-self: center;
+    justify-self: center; 
+}

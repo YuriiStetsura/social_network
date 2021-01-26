@@ -4,6 +4,7 @@ import { Avatar } from 'antd';
 import s from './users.module.css';
 import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 let Users = (props) => {
     
@@ -35,7 +36,9 @@ let Users = (props) => {
                 : props.users.map(u =>
                     <div key={u.id} className={s.user}>
                         <div className={s.avatar}>
-                            <Avatar size={80} src={u.photos.small} />
+                            <NavLink to={"/profile/" + u.id}>
+                                <Avatar size={80} src={u.photos.small} />
+                            </NavLink>   
                         </div>
                         <div className={s.subscribe}>
                             {u.followed

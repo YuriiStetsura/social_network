@@ -8,7 +8,7 @@ import 'antd/dist/antd.css';
 
 import Header from '../header/header';
 import Navigation from '../navigation/navigation';
-import Profile from '../profile/profile';
+// import Profile from '../profile/profile';
 // import Dialogs from '../dialogs/dialogs';
 import News from '../news/news';
 import Music from '../music/music';
@@ -17,6 +17,7 @@ import RightSider from '../right-sider/rightSider';
 import ProfileImg from '../profileImg/profileImg';
 import DialogsContainer from '../dialogs/dialogsContainer';
 import UsersContainer from '../users/usersContainer';
+import ProfileContainer from '../profile/ProfileContainer';
 
 
 const App = () => {
@@ -29,7 +30,7 @@ const App = () => {
                 <Navigation />
                 <div className="app-wrapper-content">
                     <Route path="/profile" 
-                           render={() => <Profile />} />
+                           render={() => <ProfileContainer />} />
                     <Route path="/dialogs" 
                            render={() => <DialogsContainer />} />
                     <Route path="/news" component={News} />

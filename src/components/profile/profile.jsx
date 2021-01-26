@@ -5,11 +5,11 @@ import ProfileInfo from './profileInfo/profileInfo';
 import MyPostContainer from './myPosts/myPostContainer';
 
 
-const Profile = () => {
-    
+const Profile = (props) => {
+
     return (
         <div className={s.profile}>
-            <ProfileInfo />
+            <ProfileInfo profileUser={props.profileUser} isFetching={props.isFetching}/>
             <MyPostContainer />
         </div>
     )
