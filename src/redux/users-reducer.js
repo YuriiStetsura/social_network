@@ -3,12 +3,14 @@ const UNFOLLOWED = 'UNFOLLOWED';
 const SET_USER = 'SET_USER';
 const TOTAL_COUNT = 'TOTAL_COUNT';
 const PAGE_CHANGE = 'PAGE_CHANGE';
+const IS_FETCHING = 'IS_FETCHING';
 
 let initialState = {
     users: [],
     totalCount: 1,
     pageSize: 5,
-    currentPage: 1
+    currentPage: 1,
+    isFetching: false
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -47,7 +49,10 @@ const usersReducer = (state = initialState, action) => {
         }
         case PAGE_CHANGE: {
             return {...state, currentPage : action.current}
-        }     
+        } 
+        case IS_FETCHING: {
+            return {...state, isFetching : action.isFetching}
+        }    
                 default:
                     return state;
     }
@@ -72,6 +77,10 @@ export const totalUsersCountAC = (count) => ({
 export const pageChangeAC = (current) => ({
     type: PAGE_CHANGE,
     current
+});
+export const toggleLoaderAC = (isFetching) => ({
+    type: IS_FETCHING,
+    isFetching
 });
 
 export default usersReducer;

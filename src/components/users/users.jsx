@@ -3,16 +3,15 @@ import { Button } from 'antd';
 import { Avatar } from 'antd';
 import s from './users.module.css';
 import { Pagination } from 'antd';
+import { Skeleton } from 'antd';
 
 let Users = (props) => {
-    // console.log(props.onPageChange);
-    // let allPage = [];
+    
+    let skeletonSize = [];
 
-    // for(let i = 1 ; i <= this.props.totalCount; i++) {
-    //     allPage.push(i);
-    // }
-
-
+    for(let i = 1 ; i <= props.pageSize; i++) {
+        skeletonSize.push(i);
+    }
 
     return (
         <>
@@ -30,8 +29,10 @@ let Users = (props) => {
                     pageSize={5}
                 />
             </div>
-            {
-                props.users.map(u =>
+            {props.isFetching
+                ? skeletonSize.map(s =>
+                    <Skeleton active />)
+                : props.users.map(u =>
                     <div key={u.id} className={s.user}>
                         <div className={s.avatar}>
                             <Avatar size={80} src={u.photos.small} />
