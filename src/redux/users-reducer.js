@@ -1,5 +1,5 @@
-const FOLLOWED = 'FOLLOWED';
-const UNFOLLOWED = 'UNFOLLOWED';
+const FOLLOW = 'FOLLOWED';
+const UNFOLLOW = 'UNFOLLOWED';
 const SET_USER = 'SET_USER';
 const TOTAL_COUNT = 'TOTAL_COUNT';
 const PAGE_CHANGE = 'PAGE_CHANGE';
@@ -15,7 +15,7 @@ let initialState = {
 
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
-        case FOLLOWED:
+        case FOLLOW:
             return {
                 ...state,
                 users: state.users.map(u => {
@@ -28,7 +28,7 @@ const usersReducer = (state = initialState, action) => {
                     return u;
                 })
             }
-        case UNFOLLOWED:
+        case UNFOLLOW:
             return {
                 ...state,
                 users: state.users.map(u => {
@@ -58,27 +58,27 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-export const followedAC = (id) => ({
-    type: FOLLOWED,
+export const follow = (id) => ({
+    type: FOLLOW,
     userId: id
 });
-export const unfollowedAC = (id) => ({
-    type: UNFOLLOWED,
+export const unfollow = (id) => ({
+    type: UNFOLLOW,
     userId: id
 });
-export const setUserdAC = (users) => ({
+export const setUser = (users) => ({
     type: SET_USER,
     users: users
 });
-export const totalUsersCountAC = (count) => ({
+export const setUsersTotalCount = (count) => ({
     type: TOTAL_COUNT,
     count
 });
-export const pageChangeAC = (current) => ({
+export const pageChange = (current) => ({
     type: PAGE_CHANGE,
     current
 });
-export const toggleLoaderAC = (isFetching) => ({
+export const toggleLoader = (isFetching) => ({
     type: IS_FETCHING,
     isFetching
 });
