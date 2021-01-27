@@ -8,14 +8,20 @@ import { withRouter } from 'react-router-dom';
 class ProfileContainer extends Component {
     
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+        
+        let userId = this.props.match.params.userId;
+
+        if(!userId) {
+            userId = 2;
+        }
+        
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
                 .then(response => {
                     this.props.setUserProfile(response.data);
                 });
     }
 
     render() {
-        console.log(this.props);
         return <Profile profileUser={this.props.profileUser}
                         isFetching={this.props.isFetching}/>
     }    

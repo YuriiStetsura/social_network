@@ -6,10 +6,8 @@ import './app.css';
 import 'antd/dist/antd.css';
 
 
-import Header from '../header/header';
+// import Header from '../header/header';
 import Navigation from '../navigation/navigation';
-// import Profile from '../profile/profile';
-// import Dialogs from '../dialogs/dialogs';
 import News from '../news/news';
 import Music from '../music/music';
 import Settings from '../settings/settings';
@@ -18,6 +16,7 @@ import ProfileImg from '../profileImg/profileImg';
 import DialogsContainer from '../dialogs/dialogsContainer';
 import UsersContainer from '../users/usersContainer';
 import ProfileContainer from '../profile/ProfileContainer';
+import HeaderContainer from '../header/headerContainer';
 
 
 const App = () => {
@@ -25,11 +24,11 @@ const App = () => {
     return(
         <BrowserRouter>
             <div className="app-wrapper">
-                <Header />
+                <HeaderContainer />
                 <ProfileImg />
                 <Navigation />
                 <div className="app-wrapper-content">
-                    <Route path="/profile" 
+                    <Route path="/profile/:userId?" 
                            render={() => <ProfileContainer />} />
                     <Route path="/dialogs" 
                            render={() => <DialogsContainer />} />
