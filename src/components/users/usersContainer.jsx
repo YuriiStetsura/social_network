@@ -9,7 +9,7 @@ class UsersContainer extends Component {
     
     componentDidMount() {
         this.props.toggleLoader(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,{withCredentials: true})
                 .then(response => {
                     this.props.setUser(response.data.items);
                     this.props.setUsersTotalCount(response.data.totalCount);
@@ -20,7 +20,7 @@ class UsersContainer extends Component {
     onPageChange = (p) => {
         this.props.toggleLoader(true);
         this.props.pageChange(p);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.pageSize}`)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.pageSize}`,{withCredentials: true})
                 .then(response => {
                     this.props.setUser(response.data.items);
                     this.props.toggleLoader(false);

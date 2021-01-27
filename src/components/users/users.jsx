@@ -5,6 +5,7 @@ import s from './users.module.css';
 import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
 import { NavLink } from 'react-router-dom';
+import * as axios from 'axios';
 
 let Users = (props) => {
     
@@ -13,15 +14,9 @@ let Users = (props) => {
     for(let i = 1 ; i <= props.pageSize; i++) {
         skeletonSize.push(i);
     }
-
+    console.log(props.users);
     return (
         <>
-            {/* <div>
-                {
-                    allPage.map(p => 
-                    <span onClick={() => { this.onPageChange(p) }}>{p + " "}</span> 
-                )}
-            </div> */}
             <div className={s.pagination}>
                 <Pagination onChange={(e) => { props.onPageChange(e) }}
                     defaultCurrent={1}
@@ -31,7 +26,7 @@ let Users = (props) => {
                 />
             </div>
             {props.isFetching
-                ? skeletonSize.map(s =>
+                ? skeletonSize.map(s => 
                     <Skeleton active />)
                 : props.users.map(u =>
                     <div key={u.id} className={s.user}>
@@ -42,8 +37,35 @@ let Users = (props) => {
                         </div>
                         <div className={s.subscribe}>
                             {u.followed
-                                ? <Button onClick={() => { props.unfollow(u.id) }} type="primary" ghost>Follow</Button>
-                                : <Button onClick={() => { props.follow(u.id) }} type="primary" ghost>Unfollow</Button>
+                                ? <Button onClick={() => { 
+                                    axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`,
+                                    {
+                                        withCredentials: true,
+                                        headers: {
+                                            "API-KEY" : "b7ae57ba-be52-4b19-8521-ad495dea210d"
+                                        }
+                                    })
+                                        .then(response => {
+                                            if(response.data.resultCode == 0) {
+                                                props.unfollow(u.id);  
+                                            }  
+                                        });   
+                                }} type="primary" ghost>Відписатися</Button>
+                                : <Button onClick={() => { 
+                                    axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`,
+                                    {},
+                                    {
+                                        withCredentials: true,
+                                        headers: {
+                                            "API-KEY" : "b7ae57ba-be52-4b19-8521-ad495dea210d"
+                                        }
+                                    })
+                                        .then(response => {
+                                            if(response.data.resultCode == 0) {
+                                                props.follow(u.id);  
+                                            }  
+                                        });    
+                                }} type="primary" ghost>Підписатися</Button>
                             }
                         </div>
                         <div className={s.content}>

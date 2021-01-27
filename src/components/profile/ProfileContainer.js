@@ -12,7 +12,7 @@ class ProfileContainer extends Component {
         let userId = this.props.match.params.userId;
 
         if(!userId) {
-            userId = 2;
+            userId = 14418;
         }
         
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
@@ -32,7 +32,6 @@ class ProfileContainer extends Component {
 let mapStateToProps = (state) => {
     return {
         profileUser: state.profilePage.profileUser,
-        isFetching: state.usersPage.isFetching,
     }
 }
 
