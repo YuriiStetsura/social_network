@@ -3,16 +3,17 @@ import { connect } from "react-redux";
 import { follow, unfollow, setUser, setUsersTotalCount, pageChange, toggleLoader } from "../../redux/users-reducer";
 import Users from './Users';
 import * as axios from 'axios';
+import { userAPI } from '../../api/api';
 
 
 class UsersContainer extends Component {
     
     componentDidMount() {
         this.props.toggleLoader(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,{withCredentials: true})
-                .then(response => {
-                    this.props.setUser(response.data.items);
-                    this.props.setUsersTotalCount(response.data.totalCount);
+            userAPI.getUser(this.props.currentPage, this.props.pageSize)
+                .then(data => {
+                    this.props.setUser(data.items);
+                    this.props.setUsersTotalCount(data.totalCount);
                     this.props.toggleLoader(false);
                 });
     }
@@ -20,9 +21,9 @@ class UsersContainer extends Component {
     onPageChange = (p) => {
         this.props.toggleLoader(true);
         this.props.pageChange(p);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.pageSize}`,{withCredentials: true})
-                .then(response => {
-                    this.props.setUser(response.data.items);
+            userAPI.getUser(p, this.props.pageSize)
+                .then(data => {
+                    this.props.setUser(data.items);
                     this.props.toggleLoader(false);
                 });
     }
