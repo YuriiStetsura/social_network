@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { profileUserAPI } from '../../api/api';
 
 
+
 class ProfileContainer extends Component {
     
     componentDidMount() {
@@ -23,8 +24,9 @@ class ProfileContainer extends Component {
     }
 
     render() {
+        
         return <Profile profileUser={this.props.profileUser}
-                        isFetching={this.props.isFetching}/>
+               />
     }    
         
     

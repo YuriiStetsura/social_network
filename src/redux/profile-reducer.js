@@ -24,7 +24,6 @@ let initialState = {
       likeCount: "7"
     }
   ],
-
   newPostText: "",
   profileUser: null
 }

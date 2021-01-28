@@ -9,7 +9,7 @@ const Profile = (props) => {
 
     return (
         <div className={s.profile}>
-            <ProfileInfo profileUser={props.profileUser} isFetching={props.isFetching}/>
+            <ProfileInfo profileUser={props.profileUser} />
             <MyPostContainer />
         </div>
     )
