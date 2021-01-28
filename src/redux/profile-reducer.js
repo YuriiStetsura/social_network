@@ -1,3 +1,5 @@
+import { profileUserAPI } from '../api/api';
+
 const ADD_POST = "ADD_POST";
 const UPDATE_NEW_POST = "UPDATE_NEW_POST";
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -36,24 +38,33 @@ const profileReducer = (state = initialState, action) => {
         post: state.newPostText,
         likeCount: 0
       };
-      let stateCopy = {...state};
+      let stateCopy = {
+        ...state
+      };
       stateCopy.posts = [...state.posts];
       stateCopy.posts.push(newPost);
       return stateCopy;
     }
     case UPDATE_NEW_POST: {
-      let stateCopy = {...state};
+      let stateCopy = {
+        ...state
+      };
       stateCopy.newPostText = action.newText;
       return stateCopy;
     }
     case SET_USER_PROFILE: {
-      return {...state, profileUser: action.profile}
+      return {
+        ...state,
+        profileUser: action.profile
+      }
     }
     default:
       return state;
   }
 
 }
+
+//actionCreator
 
 export const updateNewPostMessageActionCreator = (text) => ({
   type: UPDATE_NEW_POST,
@@ -66,5 +77,14 @@ export const setUserProfile = (profile) => ({
   type: SET_USER_PROFILE,
   profile
 });
+
+//Thunk
+
+export const getProfileUserThunk = (userId) => (dispatch) => {
+  profileUserAPI.getProfileUser(userId)
+    .then(data => {
+      dispatch(setUserProfile(data));
+    });
+}
 
 export default profileReducer;

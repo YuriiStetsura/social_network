@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 
 
 let Users = (props) => {
-    console.log(props);
+
     let skeletonSize = [];
 
     for(let i = 1 ; i <= props.pageSize; i++) {
