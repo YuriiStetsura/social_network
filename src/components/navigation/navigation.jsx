@@ -13,6 +13,11 @@ const Navigation = () => {
                     Profile</NavLink>
                 </div>
                 <div className={s.item}>
+                    <NavLink to="/friend"
+                             activeClassName={s.activeLink}>
+                    MyFriend</NavLink>
+                </div>
+                <div className={s.item}>
                     <NavLink to="/dialogs"
                              activeClassName={s.activeLink}>
                     Message</NavLink>

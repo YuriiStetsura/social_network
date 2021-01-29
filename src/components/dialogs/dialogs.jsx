@@ -1,16 +1,15 @@
 import React from 'react';
 import DialogItem from './dialogItem/dialogItem';
-
 import s from './dialogs.module.css';
 import Message from './messageItem/messageItem';
-
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 
 const Dialogs = (props) => {
-    
+
+
     const dialogElement = props.dialogs.map((d) => {
         return (
             <>
@@ -30,7 +29,7 @@ const Dialogs = (props) => {
 
     const onUpdateNewPostMessage = () => {
         let text = inputMessage.current.value;
-        props.updateNewPostMessage(text);
+        props.updateNewMessage(text);
     }
 
     const onAddMessage = () => {
