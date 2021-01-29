@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import { compose } from 'redux';
+import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { pageChange, getUserThunk, unfollowThunk, followThunk } from "../../redux/users-reducer";
 import Users from './Users';
 
@@ -42,10 +44,10 @@ let mapStateToProps = (state) => {
     }
 }
 
+export default compose(connect(mapStateToProps, { pageChange, getUserThunk, unfollowThunk, followThunk }),
+                       withAuthRedirect)(UsersContainer)
 
-export default connect(mapStateToProps, 
-    { pageChange, getUserThunk, unfollowThunk, followThunk })
-    (UsersContainer);
+
 
 
 

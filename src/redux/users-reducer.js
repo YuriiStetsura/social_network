@@ -18,7 +18,7 @@ let initialState = {
     isFetching: false,
     btnDisabled: []
 }
-
+//reducer
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW:

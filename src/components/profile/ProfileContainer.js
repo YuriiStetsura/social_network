@@ -31,7 +31,6 @@ class ProfileContainer extends Component {
 let mapStateToProps = (state) => {
     return {
         profileUser: state.profilePage.profileUser,
-        isAuth: state.auth.isAuth
     }
 }
 
