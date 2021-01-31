@@ -10,7 +10,7 @@ const ProfileInfo = (props) => {
     if(!props.profileUser) {
         return <Skeleton active />
     } 
-
+    
     return (
         <div className={s.userInfo}>
             <div className={s.profileAvatar}>
@@ -18,7 +18,8 @@ const ProfileInfo = (props) => {
             </div>
             <div>
                 <h1>{props.profileUser.fullName}</h1>
-                <ProfileStatus status="Hello, My name is Yura"/>
+                <ProfileStatus status={props.status}
+                               updateStatusUserThunk={props.updateStatusUserThunk}/>
             </div>
             
         </div>

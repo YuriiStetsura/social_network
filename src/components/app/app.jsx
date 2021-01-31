@@ -6,7 +6,6 @@ import './app.css';
 import 'antd/dist/antd.css';
 
 
-// import Header from '../header/header';
 import Navigation from '../navigation/navigation';
 import News from '../news/news';
 import Music from '../music/music';
