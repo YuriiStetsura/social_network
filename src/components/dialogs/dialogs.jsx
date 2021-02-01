@@ -4,11 +4,15 @@ import s from './dialogs.module.css';
 import Message from './messageItem/messageItem';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Field, reduxForm } from 'redux-form';
+import { SelectField } from '../common/FormsControls/FormsControls';
+import { required, maxLength } from '../common/utils/validation';
+
+const maxLengthValue = maxLength(10);
+const TextArea = SelectField("textarea");
 
 
 const Dialogs = (props) => {
-
 
     const dialogElement = props.dialogs.map((d) => {
         return (
@@ -25,15 +29,8 @@ const Dialogs = (props) => {
         )   
     });
 
-    let inputMessage = React.createRef();
-
-    const onUpdateNewPostMessage = () => {
-        let text = inputMessage.current.value;
-        props.updateNewMessage(text);
-    }
-
-    const onAddMessage = () => {
-        props.addMessage();
+    const addMessage = (formData) => {
+        props.addMessage(formData.message);
     }
 
     return (
@@ -43,21 +40,30 @@ const Dialogs = (props) => {
             </div>
             <div className={s.messages}>
                 {messageElement}
-                <div>
-                    <textarea onChange={onUpdateNewPostMessage} 
-                              value={props.newPostMessage}
-                              ref={inputMessage} />
-                </div>
-                <div>
-                    <Button onClick={onAddMessage}
-                            type="primary" 
-                            ghost>Опублікувати</Button>
-                </div>
+                <AddMessageReduxForm onSubmit={addMessage} />
                 
             </div>
             
         </div>
     )
 }
+
+const AddMessageForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field  name="message"
+                        component={TextArea}
+                        validate={[required, maxLengthValue]}
+                />
+            </div>
+            <div>
+                <button>Опублікувати</button>
+            </div>
+        </form>
+    )
+}
+
+let AddMessageReduxForm = reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)
 
 export default Dialogs;

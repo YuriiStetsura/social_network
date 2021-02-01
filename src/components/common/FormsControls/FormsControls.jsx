@@ -1,0 +1,17 @@
+import React from 'react';
+import styles from './FormsControls.module.css';
+
+
+export const SelectField = (Component) => ({input, meta, ...props}) => {
+    const hasError = meta.touched && meta.error;
+    return (
+        <div className={styles.formControl + " " + (hasError ? styles.error : "")}>
+            <div>
+                <Component {...input} {...props}/>  
+            </div>
+            { hasError && meta.error && <span>{meta.error}</span> }
+        </div>
+    )
+ }
+
+ 

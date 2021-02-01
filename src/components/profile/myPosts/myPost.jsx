@@ -1,27 +1,21 @@
 import React from 'react';
 //import s from './myPost.module.css';
-
-import { Input } from 'antd';
-
 import Post from './post/post'
+import { Field, reduxForm } from 'redux-form';
 import { Button } from 'antd';
+import { required, maxLength } from '../../common/utils/validation';
+import { SelectField } from '../../common/FormsControls/FormsControls';
 
-
-const { TextArea } = Input;
+const maxLengthValue = maxLength(50);
+const TextArea = SelectField("textarea");
 
 const MyPost = (props) => {
-    
+
     const postElement = props.posts.map(p => <Post post={p.post} likeCount={p.likeCount} /> );
 
-    let newPostElement = React.createRef();
 
-    let onAddPost = () => {
-        props.addPost();
-    }
-
-    let onPostChange = () => {
-        let text = newPostElement.current.value;
-        props.updateNewPostText(text);
+    let onAddPost = (formData) => {
+        props.addPost(formData.post);
     }
 
     return (
@@ -30,13 +24,7 @@ const MyPost = (props) => {
             <div>
                 New Posts
                 <div>
-                    <textarea onChange={onPostChange} 
-                              value={props.newPostText}
-                              ref={newPostElement}>
-                    </textarea>
-                    <div>
-                        <Button type="primary" ghost onClick={ onAddPost }>Опублікувати</Button>
-                    </div>  
+                    <AddPostReduxForm onSubmit={onAddPost} />    
                 </div>
             </div>
             <div>
@@ -45,5 +33,27 @@ const MyPost = (props) => {
         </div>
     )
 }
+
+const addPostForm = (props) => {
+
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field  name="post" 
+                        placeholder="Post message"
+                        component={TextArea}
+                        validate={[required, maxLengthValue]}
+                />
+            </div> 
+            <div>
+                {/* <button>fewefgwef</button> */}
+                <Button type="primary" htmlType="submit" ghost >Опублікувати</Button>
+            </div>
+        </form>
+    )
+}
+
+let AddPostReduxForm = reduxForm({form: "PostForm"})(addPostForm);
+
 
 export default MyPost;
