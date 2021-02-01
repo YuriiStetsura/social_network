@@ -25,10 +25,17 @@ export default class ProfileStatus extends React.Component {
             status : e.currentTarget.value
         })
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({
+                status : this.props.status
+            });
+        }
+    }
     
 
     render() {
-        console.log(this.props)
         return (
             <>
             {!this.state.editMode 
