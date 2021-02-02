@@ -5,11 +5,18 @@ import styles from './FormsControls.module.css';
 export const SelectField = (Component) => ({input, meta, ...props}) => {
     const hasError = meta.touched && meta.error;
     return (
-        <div className={styles.formControl + " " + (hasError ? styles.error : "")}>
+        // className={styles.formControl + " " + (hasError ? styles.error : "")}
+        <div >
             <div>
-                <Component {...input} {...props}/>  
+                <Component {...input} {...props} className={!meta.touched 
+                                                                ? "form-control" : hasError 
+                                                                ? "form-control is-invalid" : "form-control is-valid"}/>    
             </div>
-            { hasError && meta.error && <span>{meta.error}</span> }
+            { hasError && meta.error && 
+                <div class="alert alert-danger" role="alert">
+                    {meta.error}
+                </div> 
+            }
         </div>
     )
  }

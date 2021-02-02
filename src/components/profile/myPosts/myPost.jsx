@@ -6,7 +6,7 @@ import { Button } from 'antd';
 import { required, maxLength } from '../../common/utils/validation';
 import { SelectField } from '../../common/FormsControls/FormsControls';
 
-const maxLengthValue = maxLength(50);
+const maxLengthValue = maxLength(10);
 const TextArea = SelectField("textarea");
 
 const MyPost = (props) => {
