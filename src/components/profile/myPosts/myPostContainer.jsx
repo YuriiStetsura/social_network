@@ -12,6 +12,6 @@ let mapStateToProps = (state) => {
     }
 }
 
-const myPostContainer = connect(mapStateToProps, { addPost })(MyPost);
+const MyPostContainer = connect(mapStateToProps, { addPost })(MyPost);
 
-export default myPostContainer;
+export default MyPostContainer;

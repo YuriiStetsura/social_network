@@ -9,10 +9,11 @@ import { SelectField } from '../../common/FormsControls/FormsControls';
 const maxLengthValue = maxLength(10);
 const TextArea = SelectField("textarea");
 
-const MyPost = (props) => {
+const MyPost = React.memo(props => {
+
+    console.log("render");
 
     const postElement = props.posts.map(p => <Post post={p.post} likeCount={p.likeCount} /> );
-
 
     let onAddPost = (formData) => {
         props.addPost(formData.post);
@@ -32,7 +33,7 @@ const MyPost = (props) => {
             </div>
         </div>
     )
-}
+});
 
 const addPostForm = (props) => {
 
@@ -46,7 +47,6 @@ const addPostForm = (props) => {
                 />
             </div> 
             <div>
-                {/* <button>fewefgwef</button> */}
                 <Button type="primary" htmlType="submit" ghost >Опублікувати</Button>
             </div>
         </form>

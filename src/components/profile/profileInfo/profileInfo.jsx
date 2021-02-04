@@ -3,7 +3,8 @@ import './profileInfo.module.css';
 import { Avatar } from 'antd';
 import { Skeleton } from 'antd';
 import s from './profileInfo.module.css';
-import ProfileStatus from './profileStatus';
+import ProfileStatusWithHook from './profileStatusWithHook';
+
 
 const ProfileInfo = (props) => {
     
@@ -18,7 +19,7 @@ const ProfileInfo = (props) => {
             </div>
             <div>
                 <h1>{props.profileUser.fullName}</h1>
-                <ProfileStatus status={props.status}
+                <ProfileStatusWithHook status={props.status}
                                updateStatusUserThunk={props.updateStatusUserThunk}/>
             </div>
             
