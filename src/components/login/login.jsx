@@ -11,7 +11,6 @@ const maxLengthValue = maxLength(30);
 const Input = SelectField("input");
 
 const LoginForm = (props) => {
-    console.log(props);
     return (
         <form onSubmit={props.handleSubmit}>
             <div>

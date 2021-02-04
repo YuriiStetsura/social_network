@@ -11,11 +11,14 @@ import { compose } from 'redux';
 class ProfileContainer extends Component {
     
     componentDidMount() {
-        
+        // console.log(this.props.initializedUserId);
         let userId = this.props.match.params.userId; // save id user
-        //14418
+        
         if(!userId) {
-            userId = 14418;
+            userId = this.props.initializedUserId;
+            if (!userId) {
+                this.props.history.push("/login");
+            }
         }
         
         this.props.getProfileUserThunk(userId); //thunk
@@ -35,6 +38,7 @@ let mapStateToProps = (state) => {
     return {
         profileUser: state.profilePage.profileUser,
         status: state.profilePage.status,
+        initializedUserId : state.auth.id,
     }
 }
 

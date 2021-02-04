@@ -5,6 +5,7 @@ import s from'./header.module.css';
 import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
+    console.log(props.history);
     return (
         <header className={s.header}>
                 <img src="https://www.freeiconspng.com/uploads/logo-twitter-transparent-background-10.png" alt="img"/>
@@ -16,8 +17,7 @@ const Header = (props) => {
                     : <NavLink to="/login">
                         <Button className={s.logIn} type="primary" ghost>Log in</Button>
                       </NavLink>
-                }
-                       
+                }            
         </header>
     )
 }

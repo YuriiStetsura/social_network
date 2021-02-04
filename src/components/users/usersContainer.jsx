@@ -4,6 +4,14 @@ import { compose } from 'redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { pageChange, getUserThunk, unfollowThunk, followThunk } from "../../redux/users-reducer";
 import Users from './Users';
+import {
+    getUsers,
+    getTotalCount,
+    getPageSize,
+    getCurrentPage,
+    getIsFetching,
+    getBtnDisabled
+} from '../../redux/users-selectors';
 
 
 
@@ -35,12 +43,12 @@ class UsersContainer extends Component {
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users, 
-        totalCount: state.usersPage.totalCount,
-        pageSize: state.usersPage.pageSize,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        btnDisabled: state.usersPage.btnDisabled,
+        users: getUsers(state), 
+        totalCount: getTotalCount(state),
+        pageSize: getPageSize(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        btnDisabled: getBtnDisabled(state),
     }
 }
 

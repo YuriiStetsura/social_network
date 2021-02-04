@@ -13,7 +13,7 @@ export const SelectField = (Component) => ({input, meta, ...props}) => {
                                                                 ? "form-control is-invalid" : "form-control is-valid"}/>    
             </div>
             { hasError && meta.error && 
-                <div class="alert alert-danger" role="alert">
+                <div className="alert alert-danger" role="alert">
                     {meta.error}
                 </div> 
             }
