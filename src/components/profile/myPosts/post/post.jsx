@@ -3,9 +3,9 @@ import React from 'react';
 
 const Post = (props) => {
     return (
-        <div>
+        <>
             {props.post}  {props.likeCount}
-        </div>
+        </>
     )
 }
 

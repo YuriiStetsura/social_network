@@ -13,6 +13,9 @@ const Profile = (props) => {
             <ProfileInfo profileUser={props.profileUser} 
                          status={props.status}
                          updateStatusUserThunk={props.updateStatusUserThunk}
+                         owner={props.owner}
+                         setProfileAvatarThunk={props.setProfileAvatarThunk}
+                         updateProfileInfoThunk={props.updateProfileInfoThunk}
             />            
             <MyPostContainer />
         </div>

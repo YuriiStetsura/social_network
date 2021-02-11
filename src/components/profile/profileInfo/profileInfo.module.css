@@ -1,10 +1,30 @@
 .userInfo {
     display: grid;
     grid-template-columns: 1fr 7fr;
-    gap: 20px;
+    grid-template-rows: 3fr 1fr;
+    grid-template-areas:
+    'avatar profileInfo'
+    'uploadAvatar profileInfo';
+    gap: 10px;
 }
 
 .profileAvatar {
-    align-self: center;
-    justify-self: center; 
+    grid-area: avatar;
+    /* align-self: center; */
+    /* justify-self: center;  */
+}
+
+.profile{
+    grid-area: profileInfo;
+    padding-left: 10px;
+}
+
+.uploadInput {
+    grid-area: uploadAvatar;
+    /* justify-self: center;  */
+    padding: 10px;
+}
+
+.contact {
+    padding-left: 20px;
 }

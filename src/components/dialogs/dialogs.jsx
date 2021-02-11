@@ -17,7 +17,7 @@ const Dialogs = (props) => {
     const dialogElement = props.dialogs.map((d) => {
         return (
             <>
-                <Avatar size={60} icon={<UserOutlined />} />
+                <Avatar  size={60} icon={<UserOutlined />} />
                 <DialogItem id={d.id} name={d.name} />
             </>
         )   

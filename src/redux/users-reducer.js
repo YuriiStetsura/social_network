@@ -118,34 +118,31 @@ export const toggleBtnDisable = (btnDisabled, userId) => ({
 
 //thunk
 
-export const getUserThunk = (currentPage, pageSize) => (dispatch) => {
+export const getUserThunk = (currentPage, pageSize) => async(dispatch) => {
     dispatch(toggleLoader(true));
-    userAPI.getUser(currentPage, pageSize)
-        .then(data => {
-            dispatch(setUser(data.items));
-            dispatch(setUsersTotalCount(data.totalCount));
-            dispatch(toggleLoader(false));
-        });
+
+    let data = await userAPI.getUser(currentPage, pageSize);
+    dispatch(setUser(data.items));
+    dispatch(setUsersTotalCount(data.totalCount));
+    dispatch(toggleLoader(false));
 };
-export const unfollowThunk = (id) => (dispatch) => {
+export const unfollowThunk = (id) => async(dispatch) => {
     dispatch(toggleBtnDisable(true, id));
-    userAPI.unfollowUser(id)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(unfollow(id));
-            }
-            dispatch(toggleBtnDisable(false, id));
-        });
+
+    let response = await userAPI.unfollowUser(id);
+    if (response.data.resultCode === 0) {
+        dispatch(unfollow(id));
+    }
+    dispatch(toggleBtnDisable(false, id));
 }
-export const followThunk = (id) => (dispatch) => {
+export const followThunk = (id) => async(dispatch) => {
     dispatch(toggleBtnDisable(true, id));
-    userAPI.followUser(id)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(follow(id));
-            }
-            dispatch(toggleBtnDisable(false, id));
-        });
+    
+    let response = await userAPI.followUser(id);
+    if (response.data.resultCode === 0) {
+        dispatch(follow(id));
+    }
+    dispatch(toggleBtnDisable(false, id));
 }
 
 export default usersReducer;

@@ -1,10 +1,12 @@
 import {
   profileUserAPI
 } from '../api/api';
+import { stopSubmit } from "redux-form";
 
 const ADD_POST = "ADD_POST";
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 const SET_STATUS_USER = 'SET_STATUS_USER';
+const UPDATE_PROFILE_AVATAR = 'UPDATE_PROFILE_AVATAR';
 
 let initialState = {
   posts: [{
@@ -31,6 +33,7 @@ let initialState = {
   profileUser: null,
   status: ''
 }
+//reducer
 
 const profileReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -53,6 +56,12 @@ const profileReducer = (state = initialState, action) => {
         status: action.status
       }
     }
+    case UPDATE_PROFILE_AVATAR: {
+      return {
+        ...state,
+        profileUser : {...state.profileUser, photos: action.newPhoto}
+      }
+    }
     default:
       return state;
   }
@@ -72,30 +81,45 @@ export const setUserProfile = (profile) => ({
 export const setStatusUser = (status) => ({
   type: SET_STATUS_USER,
   status,
+});
+export const updateProfileAvatar = (newPhoto) => ({
+  type: UPDATE_PROFILE_AVATAR,
+  newPhoto,
 })
 
 
 //Thunk
 
-export const getProfileUserThunk = (userId) => (dispatch) => {
-  profileUserAPI.getProfileUser(userId)
-    .then(response => {
-      dispatch(setUserProfile(response.data));
-    });
+export const setProfileAvatarThunk = (photoFile) => async(dispatch) => {
+  let response = await profileUserAPI.uploadProfileImg(photoFile);
+  if (response.data.resultCode === 0) {
+    dispatch(updateProfileAvatar(response.data.data.photos));
+  }
 }
-export const setStatusUserThunk = (userId) => (dispatch) => {
-  profileUserAPI.setStatusUser(userId)
-    .then(response => {
-        dispatch(setStatusUser(response.data));
-    });
+export const getProfileUserThunk = (userId) => async(dispatch) => {
+  let response = await profileUserAPI.getProfileUser(userId);
+  dispatch(setUserProfile(response.data));
 }
-export const updateStatusUserThunk = (status) => (dispatch) => {
-  profileUserAPI.updateStatusUser(status)
-    .then(response => {
+export const setStatusUserThunk = (userId) => async(dispatch) => {
+  let response = await profileUserAPI.setStatusUser(userId);
+  dispatch(setStatusUser(response.data));
+}
+export const updateStatusUserThunk = (status) => async(dispatch) => {
+  let response = await profileUserAPI.updateStatusUser(status);
       if (response.data.resultCode === 0) {
-        dispatch(setStatusUser(status))
+        dispatch(setStatusUser(status));
       }
-    });
+}
+export const updateProfileInfoThunk = (profileData) => async(dispatch, getState) => {
+  const userId = getState().auth.id;
+  const response = await profileUserAPI.updateProfileInfo(profileData);
+  if( response.data.resultCode === 0) {
+    dispatch(getProfileUserThunk(userId));
+  } else {
+    const message = response.data.messages[0]
+    dispatch(stopSubmit("profileInfo", {_error : message}));
+    return Promise.reject(response.data.messages[0]);
+  }
 }
 
 export default profileReducer;

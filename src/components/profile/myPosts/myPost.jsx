@@ -11,9 +11,7 @@ const TextArea = SelectField("textarea");
 
 const MyPost = React.memo(props => {
 
-    console.log("render");
-
-    const postElement = props.posts.map(p => <Post post={p.post} likeCount={p.likeCount} /> );
+    const postElement = props.posts.map(p => <div key={Math.random()}><Post post={p.post} likeCount={p.likeCount} /></div> );
 
     let onAddPost = (formData) => {
         props.addPost(formData.post);
