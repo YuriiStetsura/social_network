@@ -5,7 +5,7 @@ import s from'./header.module.css';
 import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
-    console.log(props.history);
+    console.log(props.isAuth);
     return (
         <header className={s.header}>
                 <img src="https://www.freeiconspng.com/uploads/logo-twitter-transparent-background-10.png" alt="img"/>

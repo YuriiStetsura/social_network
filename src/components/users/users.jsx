@@ -29,7 +29,7 @@ let Users = (props) => {
 
             {props.isFetching
                 ? skeletonSize.map(s => 
-                    <Skeleton active />)
+                    <div key={Math.random()}><Skeleton active /></div>)
                 : props.users.map(u =>
                     <div key={u.id} className={s.user}>
 

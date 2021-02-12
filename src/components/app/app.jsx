@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import './app.css';
 import 'antd/dist/antd.css';
 import Navigation from '../navigation/navigation';
@@ -61,6 +61,7 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
        return {
               initialized : state.app.initialized,
+              isAuth : state.auth.isAuth,
        }
 }
 

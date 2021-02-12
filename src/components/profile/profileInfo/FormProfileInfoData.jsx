@@ -35,12 +35,12 @@ let FormProfileInfoData = (props) => {
             <div>
                 {contacts.map(elem => {
                     return  <div key={elem[0]} className={s.contact}>
-                                <label>{elem[0]}</label> : <div className={s.contact}><Field name={`contacts.${elem[0]}`} component="input" type="text"/></div>
+                                <label>{elem[0]}</label> : <div className={s.contact}><Field className="form-control" name={`contacts.${elem[0]}`} component="input" type="text"/></div>
                             </div>
                 })}
             </div>
         </div>
-        {props.error ? <div class="alert alert-danger" role="alert">{props.error}</div> : undefined}
+        {props.error ? <div className="alert alert-danger" role="alert">{props.error}</div> : undefined}
         <Button type="primary" htmlType="submit" ghost>Save</Button>
       </form>
     )
