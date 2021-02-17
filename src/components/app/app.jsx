@@ -19,7 +19,7 @@ import { withRouter } from "react-router-dom";
 import { compose } from "redux";
 import { initialize } from '../../redux/app-reducer';
 import { Skeleton } from 'antd';
-
+import { Switch } from 'react-router-dom'; 
 
 class App extends React.Component {
 
@@ -35,19 +35,23 @@ class App extends React.Component {
                             <Navigation />
                             <div className="app-wrapper-content">
                                    {this.props.initialized
-                                          ?      <><Route path="/profile/:userId?"
-                                                        render={() => <ProfileContainer />} />
-                                                 <Route path="/friend"
-                                                        render={() => <MyFriend />} />
-                                                 <Route path="/dialogs"
-                                                        render={() => <DialogsContainer />} />
-                                                 <Route path="/news" component={News} />
-                                                 <Route path="/music" component={Music} />
-                                                 <Route path="/settings" component={Settings} />
-                                                 <Route path="/users"
-                                                        render={() => <UsersContainer />} />
-                                                 <Route path="/login"
-                                                        render={() => <Login />} /></>
+                                          ?      <Switch>
+                                                        <Route exact path="/"
+                                                               render={() => <Redirect to="/profile" />} />
+                                                        <Route path="/profile/:userId?"
+                                                               render={() => <ProfileContainer />} />
+                                                        <Route path="/friend"
+                                                               render={() => <MyFriend />} />
+                                                        <Route path="/dialogs"
+                                                               render={() => <DialogsContainer />} />
+                                                        <Route path="/news" component={News} />
+                                                        <Route path="/music" component={Music} />
+                                                        <Route path="/settings" component={Settings} />
+                                                        <Route path="/users"
+                                                               render={() => <UsersContainer />} />
+                                                        <Route path="/login"
+                                                               render={() => <Login />} />
+                                                 </Switch>
                                           :      <Skeleton active /> }
                             </div>
                             <RightSider />
