@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+//import { Dispatch } from 'react';
 import { ThunkAction } from 'redux-thunk';
 import {
     userAPI
@@ -120,10 +120,9 @@ export const actions = {
     } as const),
 }
 
-
 //thunk
 
-type DispatchType = Dispatch<ActionTypes>
+//type DispatchType = Dispatch<ActionTypes>
 // type GetStateType = () => appStateType
 type ThunkType = ThunkAction<Promise<void>, appStateType, unknown, ActionTypes>
 
@@ -135,16 +134,15 @@ export const getUserThunk = (currentPage: number, pageSize: number): ThunkType =
     dispatch(actions.setUsersTotalCount(data.totalCount));
     dispatch(actions.toggleLoader(false));
 };
-export const unfollowThunk = (id: number): ThunkType => async(dispatch: DispatchType) => {
+export const unfollowThunk = (id: number): ThunkType => async(dispatch) => {
     dispatch(actions.toggleBtnDisable(true, id));
-
     let response = await userAPI.unfollowUser(id);
     if (response.data.resultCode === 0) {
         dispatch(actions.unfollow(id));
     }
     dispatch(actions.toggleBtnDisable(false, id));
 }
-export const followThunk = (id: number): ThunkType => async(dispatch: DispatchType) => {
+export const followThunk = (id: number): ThunkType => async(dispatch) => {
     dispatch(actions.toggleBtnDisable(true, id));
     
     let response = await userAPI.followUser(id);

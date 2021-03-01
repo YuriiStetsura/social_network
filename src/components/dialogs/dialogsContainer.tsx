@@ -1,11 +1,11 @@
 import Dialogs from './dialogs';
-import {addMessage} from '../../redux/dialogs-reducer';
+import {actions, ActionsType} from '../../redux/dialogs-reducer';
 import { connect } from 'react-redux';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect'
 import { compose } from 'redux';
 import { appStateType } from '../../redux/redux-store'
-import { dialogsType } from '../../redux/dialogs-reducer'
-import { messagesType } from '../../redux/dialogs-reducer'
+import { dialogsType, messagesType } from '../../redux/dialogs-reducer'
+import { Dispatch } from 'react';
 
 //type props connect
 type MapStatePropsType = {
@@ -22,4 +22,14 @@ let mapStateToProps = (state: appStateType): MapStatePropsType => {
     }
 }
 
-export default compose (connect(mapStateToProps, { addMessage }),withAuthRedirect)(Dialogs)
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        addMessage: (message: string) => {
+            dispatch(actions.addMessage)
+        }
+    }
+}
+
+export default compose (connect(mapStateToProps, mapDispatchToProps),withAuthRedirect)(Dialogs)
+
+type DispatchType = Dispatch<ActionsType>

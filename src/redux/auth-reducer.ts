@@ -1,12 +1,8 @@
 import { ResultCodeEnum, ResultCodeCaptcha } from '../api/api'
 import { authAPI } from '../api/auth-api'
-import { stopSubmit } from 'redux-form'
+import { FormAction, stopSubmit } from 'redux-form'
 import { captchaAPI } from '../api/captcha-api'
-import { ThunkAction } from 'redux-thunk'
-import { appStateType } from './redux-store'
-
-const SET_AUTH_USER_DATA: string = 'AUTH/SET_AUTH_USER_DATA';
-const CAPTCHA_SUCCESS: string = 'AUTH/CAPTCHA_SUCCESS';
+import { InferActionsType, BaseThunkType } from './redux-store'
 
 
 export type initialStateType = typeof initialState;
@@ -19,10 +15,10 @@ let initialState = {
     captchaUrl: null as string | null,
 }
 
-const authReducer = (state = initialState, action : ActionType): initialStateType => {
+const authReducer = (state = initialState, action : ActionsType): initialStateType => {
     switch (action.type) {
-        case CAPTCHA_SUCCESS:
-        case SET_AUTH_USER_DATA: {
+        case 'AUTH/CAPTCHA_SUCCESS':
+        case 'AUTH/SET_AUTH_USER_DATA': {
             return {...state, ...action.data}
         }    
         default:
@@ -30,49 +26,32 @@ const authReducer = (state = initialState, action : ActionType): initialStateTyp
     }
 }
 
-//typeAction
-
-//data type action
-type dataType = {
-    id: number | null,
-    login: string | null,
-    email: string | null,
-    isAuth: boolean
-}
-type setAuthUserDataActionType = {
-    type: typeof SET_AUTH_USER_DATA,
-    data: dataType
-
-}
-type setCaptchaActionType = {
-    type: typeof CAPTCHA_SUCCESS,
-    data: {captchaUrl: string | null}
-}
 //all action type
-type ActionType = setAuthUserDataActionType | setCaptchaActionType
+type ActionsType = ReturnType<InferActionsType<typeof actions>>
 
 //actionCreator
 
-export const setAuthUserData = (id: number | null, login: string | null, email: string | null, isAuth: boolean): setAuthUserDataActionType => ({ 
-    type: SET_AUTH_USER_DATA, data: {id, login, email, isAuth}
-});
-export const setCaptcha = (captchaUrl: string | null): setCaptchaActionType => ({
-    type: CAPTCHA_SUCCESS, data: {captchaUrl}
-});
+export const actions = {
+    setAuthUserData: (id: number | null, login: string | null, email: string | null, isAuth: boolean) => ({ 
+        type: 'AUTH/SET_AUTH_USER_DATA', data: {id, login, email, isAuth}
+    } as const),
+    setCaptcha: (captchaUrl: string | null) => ({
+        type: 'AUTH/CAPTCHA_SUCCESS', data: {captchaUrl}
+    } as const),
+} 
 
 //thunk type
-type ThunkType = ThunkAction<Promise<void>, appStateType, unknown, ActionType>
+type ThunkType = BaseThunkType<ActionsType | FormAction>
 
 //thunk
 export const setAuthMeThunk = (): ThunkType => async(dispatch) => {
     let response = await authAPI.authMe();
     if (response.resultCode === ResultCodeEnum.Success) {
         let {id, login, email} = response.data;
-        dispatch(setAuthUserData(id, login, email, true));
+        dispatch(actions.setAuthUserData(id, login, email, true));
     } 
 } 
-//!!!!!!
-export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async(dispatch: any) => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string): ThunkType => async(dispatch) => {
     let response = await authAPI.login(email, password, rememberMe, captcha)
             if (response.data.resultCode === ResultCodeEnum.Success) {
                 dispatch(setAuthMeThunk());
@@ -88,13 +67,13 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 export const logout = (): ThunkType => async(dispatch) => {
     let response = await authAPI.logout()
             if (response.data.resultCode === 0) {
-                dispatch(setAuthUserData(null, null, null, false));
+                dispatch(actions.setAuthUserData(null, null, null, false));
             } 
 } 
 export const captchaUrlThunk = (): ThunkType => async(dispatch) => {
     let response = await captchaAPI.getCaptcha()
     const captchaUrl = response.data.url;
-    dispatch(setCaptcha(captchaUrl));
+    dispatch(actions.setCaptcha(captchaUrl));
     
 } 
 
