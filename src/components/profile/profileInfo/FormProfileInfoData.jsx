@@ -1,12 +1,19 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { Button } from 'antd';
 import s from './profileInfo.module.css';
 import { required } from '../../common/utils/validation';
 import { SelectField } from '../../common/FormsControls/FormsControls';
+import { contactsType, profileUserType } from '../../../redux/profile-reducer'
+import { ProfileInfoFormDataType } from './profileInfo'
 
 const textarea = SelectField("textarea");
 const input = SelectField("input");
+
+// type PropsOwnType = {
+//   contacts: contactsType 
+//   initialValues: profileUserType 
+// }
 
 let FormProfileInfoData = (props) => {
 

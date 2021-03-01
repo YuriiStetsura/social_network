@@ -3,6 +3,8 @@ import {
 } from '../api/api';
 import { stopSubmit } from "redux-form";
 import {photosType} from "../type/type";
+import { ThunkAction } from 'redux-thunk';
+import { appStateType } from './redux-store';
 
 const ADD_POST = "PROFILE/ADD_POST";
 const SET_USER_PROFILE = 'PROFILE/SET_USER_PROFILE';
@@ -16,7 +18,7 @@ type postsType = {
   post: string
   likeCount: number
 }
-type contactsType = {
+export type contactsType = {
   github: string
   vk: string
   facebook: string
@@ -26,8 +28,9 @@ type contactsType = {
   youtube: string
   mainLink: string
 }
-type profileUserType = {
+export type profileUserType = {
   userId: number
+  aboutMe: string
   lookingForAJob: boolean
   lookingForAJobDescription: boolean
   fullName: string
@@ -65,7 +68,7 @@ let initialState = {
 }
 //reducer
 
-const profileReducer = (state = initialState, action: any): initialStateType => {
+const profileReducer = (state = initialState, action: ActionType): initialStateType => {
   switch (action.type) {
     case ADD_POST: {
       // let body = action.posst;
@@ -116,6 +119,8 @@ type updateProfileAvatarType = {
   type: typeof UPDATE_PROFILE_AVATAR
   newPhoto: photosType
 }
+//all action type
+type ActionType = addPostType | setUserProfileType | setStatusUserType | updateProfileAvatarType
 
 //actionCreator
 
@@ -139,31 +144,38 @@ export const updateProfileAvatar = (newPhoto: photosType): updateProfileAvatarTy
 
 //Thunk
 
-export const setProfileAvatarThunk = (photoFile: any) => async(dispatch: any) => {
+type ThunkType = ThunkAction<Promise<void>, appStateType, unknown, ActionType>
+type UpdateProfileInfoThunkType = ThunkAction<Promise<string | undefined | void>, appStateType, unknown, ActionType>
+// type GetStateType = () => appStateType
+/// danger !!!! type photoFile : any !!!!!
+// updateProfileInfoThunk !!!!
+
+export const setProfileAvatarThunk = (photoFile: any): ThunkType => async(dispatch) => {
   let response = await profileUserAPI.uploadProfileImg(photoFile);
   if (response.data.resultCode === 0) {
     dispatch(updateProfileAvatar(response.data.data.photos));
   }
 }
-export const getProfileUserThunk = (userId: number) => async(dispatch: any) => {
+export const getProfileUserThunk = (userId: number): ThunkType => async(dispatch) => {
   let response = await profileUserAPI.getProfileUser(userId);
   dispatch(setUserProfile(response.data));
 }
-export const setStatusUserThunk = (userId: number) => async(dispatch: any) => {
+export const setStatusUserThunk = (userId: number): ThunkType => async(dispatch) => {
   let response = await profileUserAPI.setStatusUser(userId);
   dispatch(setStatusUser(response.data));
 }
-export const updateStatusUserThunk = (status: string) => async(dispatch: any) => {
+export const updateStatusUserThunk = (status: string): ThunkType => async(dispatch) => {
   let response = await profileUserAPI.updateStatusUser(status);
       if (response.data.resultCode === 0) {
         dispatch(setStatusUser(status));
       }
 }
-export const updateProfileInfoThunk = (profileData: profileUserType) => async(dispatch: any, getState: any) => {
-  const userId = getState().auth.id;
+/////!!!!!
+export const updateProfileInfoThunk = (profileData: profileUserType): UpdateProfileInfoThunkType => async(dispatch:any , getState: any) => {
+  const _userId = getState().auth.id;
   const response = await profileUserAPI.updateProfileInfo(profileData);
-  if( response.data.resultCode === 0) {
-    dispatch(getProfileUserThunk(userId));
+  if(response.data.resultCode === 0) {
+    dispatch(getProfileUserThunk(_userId));
   } else {
     const message = response.data.messages[0]
     dispatch(stopSubmit("profileInfo", {_error : message}));

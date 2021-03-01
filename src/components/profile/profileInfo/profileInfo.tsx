@@ -6,14 +6,29 @@ import s from './profileInfo.module.css';
 import ProfileStatusWithHook from './profileStatusWithHook';
 import { Button } from 'antd';
 import FormProfileInfoData from './FormProfileInfoData';
+import { profileUserType, contactsType } from '../../../redux/profile-reducer'
 
+type ProfileInfoPropsType = {
+    profileUser: profileUserType 
+    status: string
+    updateStatusUserThunk: (status: string) => void
+    owner: boolean
+    setProfileAvatarThunk: (photoFile: any) => void
+    updateProfileInfoThunk: (profileData: profileUserType) => Promise<string | undefined | void>
+}
+export type ProfileInfoFormDataType = {
+    fullName: string
+    aboutMe: string
+    lookingForAJobDescription: string
+    lookingForAJob: boolean
+    contacts: contactsType
+}
 
-
-const ProfileInfo = (props) => {
+const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
 
     let [editMode, setEditMode] = useState(false);
 
-    const uploadImg = (event) => {
+    const uploadImg = (event: any) => {
         if(event.target.files.length) {
             props.setProfileAvatarThunk(event.target.files[0]);
         }  
@@ -23,7 +38,7 @@ const ProfileInfo = (props) => {
         return <Skeleton active />
     } 
 
-    const onUpdateProfileInfo = (formData) => {
+    const onUpdateProfileInfo = (formData: profileUserType) => {
         props.updateProfileInfoThunk(formData)
             .then(() => {
                 setEditMode(false);
@@ -54,14 +69,19 @@ const ProfileInfo = (props) => {
                         /> }
                 <b>Status: </b>
                 <ProfileStatusWithHook  status={props.status}
-                                    updateStatusUserThunk={props.updateStatusUserThunk}/> 
+                                        updateStatusUserThunk={props.updateStatusUserThunk}/> 
             </div>   
         </div>
     )  
 }
-
-const ProfileInfoData = (props) => {
+type ProfileInfoDataPropsType = {
+    profileUser: profileUserType
+    owner: boolean
+    onFormProfileData: () => void
+}
+const ProfileInfoData: React.FC<ProfileInfoDataPropsType> = (props) => {
     const contacts = Object.entries(props.profileUser.contacts);
+  
     return (
         <>
         <h1>{props.profileUser.fullName}</h1>
@@ -94,7 +114,6 @@ const ProfileInfoData = (props) => {
         </>
     )
 }
-
 
 
 export default ProfileInfo;

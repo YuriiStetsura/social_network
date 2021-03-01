@@ -4,17 +4,28 @@ import s from './dialogs.module.css';
 import Message from './messageItem/messageItem';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { SelectField } from '../common/FormsControls/FormsControls';
 import { required, maxLength } from '../common/utils/validation';
+import {dialogsType, messagesType} from '../../redux/dialogs-reducer'
 
 const maxLengthValue = maxLength(10);
 const TextArea = SelectField("textarea");
 
+// type props Dialogs
+type DialogsPropsType = {
+    dialogs: Array<dialogsType> 
+    messages: Array<messagesType>
+    addMessage: (message: string) => void
+}
+type MessageFormDataType = {
+    message: string
+}
+////
 
-const Dialogs = (props) => {
+const Dialogs: React.FC<DialogsPropsType> = ({dialogs, messages, addMessage}) => {
 
-    const dialogElement = props.dialogs.map((d) => {
+    const dialogElement = dialogs.map((d) => {
         return (
             <>
                 <Avatar  size={60} icon={<UserOutlined />} />
@@ -23,14 +34,15 @@ const Dialogs = (props) => {
         )   
     });
 
-    const messageElement = props.messages.map((m) => {
+    const messageElement = messages.map((m) => {
         return (
             <Message id={m.id} text={m.message} />
         )   
     });
 
-    const addMessage = (formData) => {
-        props.addMessage(formData.message);
+    const onAddMessage = (formData: MessageFormDataType) => {
+        const message = formData.message;
+        addMessage(message);
     }
 
     return (
@@ -40,7 +52,7 @@ const Dialogs = (props) => {
             </div>
             <div className={s.messages}>
                 {messageElement}
-                <AddMessageReduxForm onSubmit={addMessage} />
+                <AddMessageReduxForm onSubmit={onAddMessage} />
                 
             </div>
             
@@ -48,7 +60,7 @@ const Dialogs = (props) => {
     )
 }
 
-const AddMessageForm = (props) => {
+const AddMessageForm: React.FC<InjectedFormProps<MessageFormDataType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -64,6 +76,6 @@ const AddMessageForm = (props) => {
     )
 }
 
-let AddMessageReduxForm = reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)
+let AddMessageReduxForm = reduxForm<MessageFormDataType>({form: 'dialogAddMessageForm'})(AddMessageForm)
 
 export default Dialogs;

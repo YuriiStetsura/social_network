@@ -12,17 +12,15 @@ import { withRouter } from 'react-router-dom';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 
-
-
 class ProfileContainer extends Component {
 
     refreshProfile() {
-        // this.props.history.push("/dialogs");
+        
         let userId = this.props.match.params.userId; // save id user
-        // console.log(userId);
+       
         if(!userId) {
             userId = this.props.initializedUserId;
-            // console.log(userId);
+            
             if (!userId) {
                 this.props.history.push("/login");
             }

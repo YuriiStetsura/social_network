@@ -8,7 +8,7 @@ import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form'
 
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     usersPage: usersReducer,
@@ -17,6 +17,15 @@ const reducers = combineReducers({
     app: appReducer,
 });
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+type rootReducerType = typeof rootReducer 
+export type appStateType = ReturnType<rootReducerType> // global state type
+
+/////// type action generic ////////
+export type InferActionsType<T> = T extends {[key: string]: infer U } ? U : never
+// export type InferActionTypes<T extends {[key: string]: (...args: any[]) => any }> = ReturnType<InferActionsType<T>>
+// export type ActionTypes = ReturnType<InferActionsType<typeof actions>>
+//////////////////////////////
+
+let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
 export default store;

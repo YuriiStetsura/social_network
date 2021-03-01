@@ -4,15 +4,22 @@ import { Button } from 'antd';
 import s from'./header.module.css';
 import { NavLink } from 'react-router-dom';
 
-const Header = (props) => {
-    console.log(props.isAuth);
+
+type propsType = {
+    isAuth: boolean
+    login: string | null
+    logout: () => void
+}
+
+const Header: React.FC<propsType> = ({isAuth, login, logout}) => {
+    
     return (
         <header className={s.header}>
                 <img src="https://www.freeiconspng.com/uploads/logo-twitter-transparent-background-10.png" alt="img"/>
-                {props.isAuth 
+                {isAuth 
                     ? <div className={s.logIn}>
-                        Hi, {props.login}
-                        <Button type="primary" ghost onClick={props.logout}>Log out</Button>
+                        Hi, {login}
+                        <Button type="primary" ghost onClick={logout}>Log out</Button>
                       </div>
                     : <NavLink to="/login">
                         <Button className={s.logIn} type="primary" ghost>Log in</Button>
