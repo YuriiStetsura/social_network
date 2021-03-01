@@ -1,10 +1,11 @@
 import {
   profileUserAPI
-} from '../api/api';
+} from '../api/profileUser-api';
 import { stopSubmit } from "redux-form";
 import {photosType} from "../type/type";
 import { ThunkAction } from 'redux-thunk';
 import { appStateType } from './redux-store';
+import { ResultCodeEnum } from '../api/api';
 
 const ADD_POST = "PROFILE/ADD_POST";
 const SET_USER_PROFILE = 'PROFILE/SET_USER_PROFILE';
@@ -154,6 +155,7 @@ export const setProfileAvatarThunk = (photoFile: any): ThunkType => async(dispat
   let response = await profileUserAPI.uploadProfileImg(photoFile);
   if (response.data.resultCode === 0) {
     dispatch(updateProfileAvatar(response.data.data.photos));
+    console.log(response.data);
   }
 }
 export const getProfileUserThunk = (userId: number): ThunkType => async(dispatch) => {
@@ -166,7 +168,7 @@ export const setStatusUserThunk = (userId: number): ThunkType => async(dispatch)
 }
 export const updateStatusUserThunk = (status: string): ThunkType => async(dispatch) => {
   let response = await profileUserAPI.updateStatusUser(status);
-      if (response.data.resultCode === 0) {
+      if (response.data.resultCode === ResultCodeEnum.Success) {
         dispatch(setStatusUser(status));
       }
 }
@@ -176,6 +178,7 @@ export const updateProfileInfoThunk = (profileData: profileUserType): UpdateProf
   const response = await profileUserAPI.updateProfileInfo(profileData);
   if(response.data.resultCode === 0) {
     dispatch(getProfileUserThunk(_userId));
+    console.log(response.data)
   } else {
     const message = response.data.messages[0]
     dispatch(stopSubmit("profileInfo", {_error : message}));

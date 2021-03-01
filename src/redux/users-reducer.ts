@@ -2,7 +2,7 @@ import { Dispatch } from 'react';
 import { ThunkAction } from 'redux-thunk';
 import {
     userAPI
-} from '../api/api';
+} from '../api/users-api'
 import {usersType} from '../type/type';
 import { appStateType, InferActionsType } from './redux-store';
 
