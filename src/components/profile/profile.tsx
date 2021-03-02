@@ -10,8 +10,8 @@ type PropsType = {
     status: string
     updateStatusUserThunk: (status: string) => void
     owner: boolean
-    setProfileAvatarThunk: () => void
-    updateProfileInfoThunk: (profileData: profileUserType) => Promise<string | undefined | void>
+    setProfileAvatarThunk: (photoFile: File) => void
+    updateProfileInfoThunk: (profileData: profileUserType) => Promise<any>
 }
 
 const Profile: React.FC<PropsType>= ({profileUser, status, updateStatusUserThunk, owner, setProfileAvatarThunk, updateProfileInfoThunk}) => {

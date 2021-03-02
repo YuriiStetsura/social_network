@@ -1,20 +1,29 @@
 import React from 'react';
 //import s from './myPost.module.css';
 import Post from './post/post'
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, InjectedFormProps } from 'redux-form';
 import { Button } from 'antd';
 import { required, maxLength } from '../../common/utils/validation';
 import { SelectField } from '../../common/FormsControls/FormsControls';
+import { postsType } from '../../../redux/profile-reducer'
 
 const maxLengthValue = maxLength(10);
 const TextArea = SelectField("textarea");
 
-const MyPost = React.memo(props => {
+type MyPostPropsType = {
+    posts: Array<postsType>
+    addPost: (post: string) => void
+}
+type MyPostsFromDataType = {
+    post: string
+}
+const MyPost: React.FC<MyPostPropsType> = React.memo(props => {
 
     const postElement = props.posts.map(p => <div key={Math.random()}><Post post={p.post} likeCount={p.likeCount} /></div> );
 
-    let onAddPost = (formData) => {
+    let onAddPost = (formData: MyPostsFromDataType) => {
         props.addPost(formData.post);
+        //console.log(formData.post)
     }
 
     return (
@@ -33,7 +42,7 @@ const MyPost = React.memo(props => {
     )
 });
 
-const addPostForm = (props) => {
+const addPostForm: React.FC<InjectedFormProps<MyPostsFromDataType>>  = (props) => {
 
     return (
         <form onSubmit={props.handleSubmit}>
@@ -51,7 +60,7 @@ const addPostForm = (props) => {
     )
 }
 
-let AddPostReduxForm = reduxForm({form: "PostForm"})(addPostForm);
+let AddPostReduxForm = reduxForm<MyPostsFromDataType>({form: "PostForm"})(addPostForm);
 
 
 export default MyPost;

@@ -5,13 +5,13 @@ import s from'./header.module.css';
 import { NavLink } from 'react-router-dom';
 
 
-type propsType = {
+type PropsType = {
     isAuth: boolean
     login: string | null
     logout: () => void
 }
 
-const Header: React.FC<propsType> = ({isAuth, login, logout}) => {
+const Header: React.FC<PropsType> = ({isAuth, login, logout}) => {
     
     return (
         <header className={s.header}>

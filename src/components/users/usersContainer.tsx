@@ -16,7 +16,7 @@ import { usersType } from '../../type/type';
 import { appStateType } from '../../redux/redux-store';
 
 //props Type
-type mapStatePropsType = {
+type MapStatePropsType = {
     currentPage: number
     pageSize: number
     totalCount: number
@@ -25,13 +25,13 @@ type mapStatePropsType = {
     followingUsersId: Array<number>
     isAuth: boolean
 }
-type mapDispatchPropsType = {
+type MapDispatchPropsType = {
     getUserThunk: (currentPage: number, pageSize: number) => void
     unfollowThunk: (id: number) => void
     followThunk: (id: number) => void
     
 }
-type propsType = mapStatePropsType & mapDispatchPropsType
+type propsType = MapStatePropsType & MapDispatchPropsType
 //
 
 class UsersContainer extends Component<propsType> {
@@ -63,7 +63,7 @@ class UsersContainer extends Component<propsType> {
     }
 }
 
-const mapStateToProps = (state: appStateType): mapStatePropsType => {
+const mapStateToProps = (state: appStateType): MapStatePropsType => {
     return {
         users: getUsers(state), 
         totalCount: getTotalCount(state),
@@ -75,10 +75,8 @@ const mapStateToProps = (state: appStateType): mapStatePropsType => {
     }
 }
 
-export default compose
-    (connect
-        // <mapStatePropsType, mapDispatchPropsType, appStateType>
-        (mapStateToProps, { getUserThunk, unfollowThunk, followThunk }),
+export default compose<React.ComponentType>
+    (connect(mapStateToProps, { getUserThunk, unfollowThunk, followThunk }),
             withAuthRedirect)(UsersContainer)
 
 

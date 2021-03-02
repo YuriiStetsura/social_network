@@ -6,31 +6,31 @@ import { appStateType } from '../../redux/redux-store';
 
 //type
 
-type mapStatePropsType = {
+type MapStatePropsType = {
     login: string | null
     isAuth: boolean
 }
-type mapDispatchPropsType = {
+type MapDispatchPropsType = {
     logout: () => void
 }
-type ownPropsType = {
+type OwnPropsType = {
     // empty
 }
-type propsType = mapStatePropsType & mapDispatchPropsType & ownPropsType
+type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType
 
-class HeaderContainer extends Component<propsType> {
+class HeaderContainer extends Component<PropsType> {
     
     render() {
         return <Header {...this.props}/>
     }
 }
 
-let mapStateToProps = (state: appStateType): mapStatePropsType => {
+let mapStateToProps = (state: appStateType): MapStatePropsType => {
     return {
         login: state.auth.login,
         isAuth: state.auth.isAuth,
     }
 }
 
-export default connect<mapStatePropsType, mapDispatchPropsType, ownPropsType, appStateType>
+export default connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, appStateType>
                     (mapStateToProps, { logout })(HeaderContainer);

@@ -5,8 +5,8 @@ import { Skeleton } from 'antd';
 import s from './profileInfo.module.css';
 import ProfileStatusWithHook from './profileStatusWithHook';
 import { Button } from 'antd';
-import FormProfileInfoData from './FormProfileInfoData';
-import { profileUserType, contactsType } from '../../../redux/profile-reducer'
+import FormProfileInfoDataRedux from './FormProfileInfoData'
+import { profileUserType } from '../../../redux/profile-reducer'
 
 type ProfileInfoPropsType = {
     profileUser: profileUserType 
@@ -14,14 +14,7 @@ type ProfileInfoPropsType = {
     updateStatusUserThunk: (status: string) => void
     owner: boolean
     setProfileAvatarThunk: (photoFile: any) => void
-    updateProfileInfoThunk: (profileData: profileUserType) => Promise<string | undefined | void>
-}
-export type ProfileInfoFormDataType = {
-    fullName: string
-    aboutMe: string
-    lookingForAJobDescription: string
-    lookingForAJob: boolean
-    contacts: contactsType
+    updateProfileInfoThunk: (profileData: profileUserType) => Promise<any>
 }
 
 const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
@@ -59,7 +52,7 @@ const ProfileInfo: React.FC<ProfileInfoPropsType> = (props) => {
 
             <div className={s.profile}>
                 {editMode 
-                    ?   <FormProfileInfoData    contacts={props.profileUser.contacts}
+                    ?   <FormProfileInfoDataRedux    contacts={props.profileUser.contacts}
                                                 onSubmit={onUpdateProfileInfo}
                                                 initialValues={props.profileUser}
                         />

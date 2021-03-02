@@ -8,7 +8,7 @@ import { ResultCodeEnum } from '../api/api';
 
 
 // initialState Type
-type postsType = {
+export type postsType = {
   id: number
   post: string
   likeCount: number
@@ -66,10 +66,10 @@ let initialState = {
 const profileReducer = (state = initialState, action: ActionsType): initialStateType => {
   switch (action.type) {
     case 'PROFILE/ADD_POST': {
-      // let body = action.posst;
+      let body = action.post;
       return {
           ...state,
-          posts: [...state.posts, {id: 5, post: action.post, likeCount: 0}]
+          posts: [...state.posts, {id: 5, post: body, likeCount: 0}]
       }
     }
     case 'PROFILE/SET_USER_PROFILE': {
@@ -128,7 +128,6 @@ export const setProfileAvatarThunk = (photoFile: File): ThunkType => async(dispa
   let response = await profileUserAPI.uploadProfileImg(photoFile);
   if (response.data.resultCode === 0) {
     dispatch(actions.updateProfileAvatar(response.data.data.photos));
-    console.log(response.data);
   }
 }
 export const getProfileUserThunk = (userId: number): ThunkType => async(dispatch) => {

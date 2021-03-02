@@ -20,8 +20,9 @@ import { compose } from "redux";
 import { initialize } from '../../redux/app-reducer';
 import { Skeleton } from 'antd';
 import { Switch } from 'react-router-dom'; 
+import { appStateType } from '../../redux/redux-store'
 
-class App extends React.Component {
+class App extends React.Component<PropsType> {
 
        componentDidMount() {
               this.props.initialize();
@@ -62,11 +63,20 @@ class App extends React.Component {
 
 }
 
-const mapStateToProps = (state) => {
+type MapStateToProps = {
+       initialized: boolean
+       isAuth: boolean
+}
+type MapDispatchPropsType = {
+       initialize: () => void
+}
+type PropsType = MapDispatchPropsType & MapStateToProps
+
+const mapStateToProps = (state: appStateType): MapStateToProps => {
        return {
               initialized : state.app.initialized,
               isAuth : state.auth.isAuth,
        }
 }
 
-export default compose(withRouter, connect(mapStateToProps, { initialize }))(App);
+export default compose<React.ComponentType>(withRouter, connect(mapStateToProps, { initialize }))(App);

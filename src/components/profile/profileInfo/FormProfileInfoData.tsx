@@ -5,17 +5,15 @@ import s from './profileInfo.module.css';
 import { required } from '../../common/utils/validation';
 import { SelectField } from '../../common/FormsControls/FormsControls';
 import { contactsType, profileUserType } from '../../../redux/profile-reducer'
-import { ProfileInfoFormDataType } from './profileInfo'
 
 const textarea = SelectField("textarea");
 const input = SelectField("input");
 
-// type PropsOwnType = {
-//   contacts: contactsType 
-//   initialValues: profileUserType 
-// }
+type PropsOwnType = {
+  contacts: contactsType  
+}
 
-let FormProfileInfoData = (props) => {
+const FormProfileInfoData: React.FC<InjectedFormProps<profileUserType, PropsOwnType> & PropsOwnType> = (props) => {
 
     const contacts = Object.entries(props.contacts);
 
@@ -53,7 +51,7 @@ let FormProfileInfoData = (props) => {
     )
 }
 
-FormProfileInfoData = reduxForm({form: 'profileInfo'})(FormProfileInfoData);
+const FormProfileInfoDataRedux = reduxForm<profileUserType,PropsOwnType>({form: 'profileInfo'})(FormProfileInfoData);
 
 
-export default FormProfileInfoData;
+export default FormProfileInfoDataRedux;

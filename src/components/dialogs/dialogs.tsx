@@ -29,7 +29,7 @@ const Dialogs: React.FC<DialogsPropsType> = ({dialogs, messages, addMessage}) =>
         return (
             <>
                 <Avatar  size={60} icon={<UserOutlined />} />
-                <DialogItem id={d.id} name={d.name} />
+                <DialogItem key={d.id} id={d.id} name={d.name} />
             </>
         )   
     });

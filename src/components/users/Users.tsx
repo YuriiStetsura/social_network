@@ -7,7 +7,7 @@ import { Skeleton } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { usersType } from '../../type/type';
 
-type propsType = {
+type PropsType = {
     pageSize: number
     onPageChange: (e: number) => void
     totalCount: number
@@ -19,7 +19,7 @@ type propsType = {
     followThunk: (id: number) => void
 }
 
-let Users: React.FC<propsType> = ({pageSize, onPageChange, totalCount,
+let Users: React.FC<PropsType> = ({pageSize, onPageChange, totalCount,
     currentPage, isFetching, users, followingUsersId, unfollowThunk, followThunk}) => {
     
     let skeletonSize = [];
