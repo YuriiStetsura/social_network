@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component, useEffect } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import Profile from './profile';
 import {
     getProfileUserThunk,
@@ -8,12 +8,54 @@ import {
     setProfileAvatarThunk,
     updateProfileInfoThunk
 } from '../../redux/profile-reducer';
-import { withRouter } from 'react-router-dom';
+import { withRouter, useHistory, useParams } from 'react-router-dom';
 import { withAuthRedirect } from '../../hoc/withAuthRedirect';
 import { compose } from 'redux';
 import { profileUserType } from '../../redux/profile-reducer'
 import { appStateType } from '../../redux/redux-store';
 import {RouteComponentProps} from "react-router";
+
+
+// const ProfileContainer2 = () => {
+
+//     const initializedUserId = useSelector((state: appStateType) => state.auth.id)
+
+//     const dispatch = useDispatch()
+//     let history = useHistory()
+//     // let params = useParams()
+
+//     const refreshProfile = () => {
+//         let userId: number | null = +match.params.userId; // save id user
+       
+//         if(!userId) {
+//             userId = initializedUserId;
+            
+//             if (!userId) {
+//                 history.push("/login");
+//             }
+//         }
+//         if (!userId) {
+//             throw new Error('Id should exists in URI params or in state (authorizedUserID)')
+//         } else {
+//             dispatch(getProfileUserThunk(userId))
+//             dispatch(setStatusUserThunk(userId))
+//         }
+//     }
+
+//     useEffect(() => {
+//         refreshProfile();
+//     }, [userId])
+
+
+//     return <Profile profileUser={props.profileUser}
+//                         status={props.status}
+//                         updateStatusUserThunk={this.props.updateStatusUserThunk}
+//                         owner={!!this.props.match.params.userId}
+//                         setProfileAvatarThunk={this.props.setProfileAvatarThunk}
+//                         updateProfileInfoThunk={this.props.updateProfileInfoThunk}
+//                />
+// }
+
 
 class ProfileContainer extends Component<PropsType> {
 

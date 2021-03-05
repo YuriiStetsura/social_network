@@ -1,6 +1,7 @@
 import React from 'react'
 import { Formik, Field, Form } from 'formik';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getTerm, getFriend } from '../../redux/selectors/users-selectors'
 
 type PropsType = {
     getUserThunk: (currentPage: number, pageSize: number, term: string | null, friend: boolean | null) => void
@@ -8,13 +9,16 @@ type PropsType = {
 
 const SearchUsers: React.FC<PropsType> = (props) => {
     const dispatch = useDispatch()
+    const term = useSelector(getTerm)
+    const friend = useSelector(getFriend)
     
     return (
         <div>
             <h2>Search</h2>
             <Formik
+                enableReinitialize={true}
                 initialValues={{
-                    term: '', friend: null
+                    term: term, friend: friend
                 }}
                 onSubmit={async (values) => {
                     dispatch(props.getUserThunk(1, 5, values.term, values.friend))

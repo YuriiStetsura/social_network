@@ -152,6 +152,7 @@ export const getUserThunk = (currentPage: number, pageSize: number, term: string
     dispatch(actions.toggleLoader(true));
 
     let data = await userAPI.getUser(currentPage, pageSize, term, friend)
+    dispatch(actions.pageChange(currentPage))
     dispatch(actions.setTermUsers(term))
     dispatch(actions.setSelectFriend(friend))
     dispatch(actions.setUser(data.items))

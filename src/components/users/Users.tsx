@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from 'antd';
 import { Avatar } from 'antd';
 import s from './users.module.css';
@@ -14,6 +14,8 @@ import {
     getfollowingUsersId
 } from '../../redux/selectors/users-selectors';
 import { unfollowThunk, followThunk } from '../../redux/users-reducer';
+import * as queryString from 'querystring'
+import { useHistory } from 'react-router';
 
 type PropsType = {
     pageSize: number
@@ -34,12 +36,26 @@ const Users: React.FC<PropsType> = ({term, friend, currentPage, pageSize, getUse
     const users = useSelector(getUsers)
     const isFetching =useSelector(getIsFetching)
     const followingUsersId = useSelector(getfollowingUsersId)
+    const history = useHistory()
 
 
     const dispatch = useDispatch();
+    
+    // useEffect(() => {
+    //     const parsed = queryString.parse(history.location.search.substr(1))
+        
+    //     let actualTerm = term
+    //     let actualPage = currentPage
+    //     let actualFriend = friend
+    //     if (!!parsed.term) actualTerm = parsed.term as string
+    //     if (!!parsed.page) actualPage = Number(parsed.page)
+    //     if (!!parsed.friend) actualFriend = parsed.friend === "null" ? null : parsed.friend === "true" ? true : false
 
-    const onPageChange = (pageNumber: number, term: string | null = '', friend: boolean | null = null) => {
-        dispatch(getUserThunk(pageNumber, pageSize, term, friend));
+    //     dispatch(getUserThunk(actualPage, pageSize, actualTerm, actualFriend));
+    // }, [])
+
+    const onPageChange = (currentPage: number, term: string | null = '', friend: boolean | null = null) => {
+        dispatch(getUserThunk(currentPage, pageSize, term, friend));
     }
 
     const unfollow = (id: number) => {
@@ -53,7 +69,8 @@ const Users: React.FC<PropsType> = ({term, friend, currentPage, pageSize, getUse
         <>
             <div className={s.pagination}>
                 <Pagination onChange={(e) => { onPageChange(e, term, friend)  }}
-                            defaultCurrent={currentPage}
+                            defaultCurrent={1}
+                            current={currentPage}
                             total={totalCount}
                             pageSizeOptions={["5"]}
                             pageSize={5}
