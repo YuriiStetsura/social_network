@@ -5,38 +5,63 @@ import s from './users.module.css';
 import { Pagination } from 'antd';
 import { Skeleton } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { usersType } from '../../type/type';
+import SearchUsers from './search-users';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    getTotalCount,
+    getUsers,
+    getIsFetching,
+    getfollowingUsersId
+} from '../../redux/selectors/users-selectors';
+import { unfollowThunk, followThunk } from '../../redux/users-reducer';
 
 type PropsType = {
     pageSize: number
-    onPageChange: (e: number) => void
-    totalCount: number
     currentPage: number
-    isFetching: boolean
-    users: Array<usersType>
-    followingUsersId: Array<number>
-    unfollowThunk: (id: number) => void
-    followThunk: (id: number) => void
+    getUserThunk: (currentPage: number, pageSize: number, term: string | null, firend: boolean | null) => void
+    term: string | null
+    friend: boolean | null
 }
 
-let Users: React.FC<PropsType> = ({pageSize, onPageChange, totalCount,
-    currentPage, isFetching, users, followingUsersId, unfollowThunk, followThunk}) => {
-    
+const Users: React.FC<PropsType> = ({term, friend, currentPage, pageSize, getUserThunk}) => {
     let skeletonSize = [];
 
     for(let i = 1 ; i <= pageSize; i++) {
         skeletonSize.push(i);
     }
 
+    const totalCount = useSelector(getTotalCount)
+    const users = useSelector(getUsers)
+    const isFetching =useSelector(getIsFetching)
+    const followingUsersId = useSelector(getfollowingUsersId)
+
+
+    const dispatch = useDispatch();
+
+    const onPageChange = (pageNumber: number, term: string | null = '', friend: boolean | null = null) => {
+        dispatch(getUserThunk(pageNumber, pageSize, term, friend));
+    }
+
+    const unfollow = (id: number) => {
+        dispatch(unfollowThunk(id))
+    }
+    const follow = (id: number) => {
+        dispatch(followThunk(id))
+    }
+
     return (
         <>
             <div className={s.pagination}>
-                <Pagination onChange={(e) => { onPageChange(e)  }}
+                <Pagination onChange={(e) => { onPageChange(e, term, friend)  }}
                             defaultCurrent={currentPage}
                             total={totalCount}
                             pageSizeOptions={["5"]}
                             pageSize={5}
                 />
+            </div>
+
+            <div>
+                <SearchUsers    getUserThunk={getUserThunk}/>
             </div>
 
             {isFetching
@@ -54,11 +79,11 @@ let Users: React.FC<PropsType> = ({pageSize, onPageChange, totalCount,
                         <div className={s.subscribe}>
                             {u.followed
                                 ? <Button disabled={followingUsersId.some(id => id === u.id )}
-                                    onClick={() => { unfollowThunk(u.id) }} 
+                                    onClick={() => { unfollow(u.id) }} 
                                     type="primary" ghost>Відписатися</Button>
 
                                 : <Button disabled={followingUsersId.some(id => id === u.id)}
-                                    onClick={() => { followThunk(u.id) }} 
+                                    onClick={() => { follow(u.id) }} 
                                     type="primary" ghost>Підписатися</Button>
                             }
                         </div>

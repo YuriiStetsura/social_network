@@ -1,5 +1,4 @@
 import React from 'react';
-import { WrappedFieldProps } from 'redux-form';
 
 type FormsControlsPropsType = {
     meta: {

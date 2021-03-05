@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { appStateType } from './redux-store';
+import { appStateType } from '../redux-store';
 
 const getUsersSelector = (state: appStateType) => {
     return state.usersPage.users;
@@ -23,4 +23,10 @@ export const getIsFetching = (state: appStateType) => {
 }
 export const getfollowingUsersId = (state: appStateType) => {
     return state.usersPage.followingUsersId;
+}
+export const getTerm = (state: appStateType) => {
+    return state.usersPage.term;
+}
+export const getFriend = (state: appStateType) => {
+    return state.usersPage.friend;
 }

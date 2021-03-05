@@ -1,0 +1,9 @@
+import { createSelector } from 'reselect';
+import { appStateType } from '../redux-store';
+
+export const getAuth = (state: appStateType) => {
+    return state.auth.isAuth
+}
+export const getCaptchaUrl = (state: appStateType) => {
+    return state.auth.captchaUrl
+}

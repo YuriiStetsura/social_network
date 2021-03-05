@@ -1,8 +1,33 @@
 .nav {
     grid-area: nav;
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+    grid-template-areas:
+    'navbar'
+    'friend';
+    grid-gap: 10px;
     background-color:aliceblue;;
     padding: 20px;
     border-radius: 10px;
+}
+
+.navbar {
+    grid-area: navbar;
+}
+
+.myfriend {
+    grid-area: friend;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas:
+    'avatar name';
+    grid-gap: 10px;
+}
+.avatar {
+    grid-area: avatar;
+}
+.name {
+    grid-area: name;
 }
 
 .item a {

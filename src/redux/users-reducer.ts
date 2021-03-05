@@ -1,4 +1,3 @@
-//import { Dispatch } from 'react';
 import { ThunkAction } from 'redux-thunk';
 import {
     userAPI
@@ -7,9 +6,9 @@ import {usersType} from '../type/type';
 import { appStateType, InferActionsType } from './redux-store';
 
 
-//initial State Type
+
 export type initialStateType = typeof initialState
-///
+
 
 let initialState = {
     users: [] as Array<usersType>,
@@ -17,7 +16,10 @@ let initialState = {
     pageSize: 5, 
     currentPage: 1,
     isFetching: false,
-    followingUsersId: [] as Array<number> //array user id
+    followingUsersId: [] as Array<number>, //array user id
+    myFriend: [] as Array<usersType>,
+    term: '' as string | null,
+    friend: null as boolean | null
 }
 //reducer
 const usersReducer = (state = initialState, action: ActionTypes): initialStateType => {
@@ -80,6 +82,18 @@ const usersReducer = (state = initialState, action: ActionTypes): initialStateTy
                             state.followingUsersId.filter(id => id !== action.userId)
                     }
                 }
+        case 'SET_TERM_USERS': {
+            return {
+                ...state,
+                term: action.term
+            }
+        }
+        case 'SET_SELECT_FRIEND': {
+            return {
+                ...state,
+                friend: action.friend
+            }
+        }
         default:
             return state;
     }
@@ -118,6 +132,14 @@ export const actions = {
         isFetching,
         userId
     } as const),
+    setSelectFriend : (friend: boolean | null) => ({
+        type: 'SET_SELECT_FRIEND',
+        friend
+    } as const),
+    setTermUsers : (term: string | null) => ({
+        type: 'SET_TERM_USERS',
+        term
+    } as const)
 }
 
 //thunk
@@ -126,13 +148,15 @@ export const actions = {
 // type GetStateType = () => appStateType
 type ThunkType = ThunkAction<Promise<void>, appStateType, unknown, ActionTypes>
 
-export const getUserThunk = (currentPage: number, pageSize: number): ThunkType => async(dispatch) => {
+export const getUserThunk = (currentPage: number, pageSize: number, term: string | null, friend: boolean | null): ThunkType => async(dispatch) => {
     dispatch(actions.toggleLoader(true));
 
-    let data = await userAPI.getUser(currentPage, pageSize);
-    dispatch(actions.setUser(data.items));
-    dispatch(actions.setUsersTotalCount(data.totalCount));
-    dispatch(actions.toggleLoader(false));
+    let data = await userAPI.getUser(currentPage, pageSize, term, friend)
+    dispatch(actions.setTermUsers(term))
+    dispatch(actions.setSelectFriend(friend))
+    dispatch(actions.setUser(data.items))
+    dispatch(actions.setUsersTotalCount(data.totalCount))
+    dispatch(actions.toggleLoader(false))
 };
 export const unfollowThunk = (id: number): ThunkType => async(dispatch) => {
     dispatch(actions.toggleBtnDisable(true, id));

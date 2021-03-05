@@ -9,7 +9,6 @@ import Settings from '../settings/settings';
 import RightSider from '../right-sider/rightSider';
 import ProfileImg from '../profileImg/profileImg';
 import DialogsContainer from '../dialogs/dialogsContainer';
-import UsersContainer from '../users/usersContainer';
 import ProfileContainer from '../profile/ProfileContainer';
 import HeaderContainer from '../header/headerContainer';
 import MyFriend from '../my-friend/myFriend';
@@ -21,6 +20,7 @@ import { initialize } from '../../redux/app-reducer';
 import { Skeleton } from 'antd';
 import { Switch } from 'react-router-dom'; 
 import { appStateType } from '../../redux/redux-store'
+import { UsersContainerWithAuthRedirect } from '../users/usersContainer'
 
 class App extends React.Component<PropsType> {
 
@@ -49,7 +49,7 @@ class App extends React.Component<PropsType> {
                                                         <Route path="/music" component={Music} />
                                                         <Route path="/settings" component={Settings} />
                                                         <Route path="/users"
-                                                               render={() => <UsersContainer />} />
+                                                               render={() => <UsersContainerWithAuthRedirect />} />
                                                         <Route path="/login"
                                                                render={() => <Login />} />
                                                  </Switch>
