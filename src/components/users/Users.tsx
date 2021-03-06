@@ -41,18 +41,6 @@ const Users: React.FC<PropsType> = ({term, friend, currentPage, pageSize, getUse
 
     const dispatch = useDispatch();
     
-    // useEffect(() => {
-    //     const parsed = queryString.parse(history.location.search.substr(1))
-        
-    //     let actualTerm = term
-    //     let actualPage = currentPage
-    //     let actualFriend = friend
-    //     if (!!parsed.term) actualTerm = parsed.term as string
-    //     if (!!parsed.page) actualPage = Number(parsed.page)
-    //     if (!!parsed.friend) actualFriend = parsed.friend === "null" ? null : parsed.friend === "true" ? true : false
-
-    //     dispatch(getUserThunk(actualPage, pageSize, actualTerm, actualFriend));
-    // }, [])
 
     const onPageChange = (currentPage: number, term: string | null = '', friend: boolean | null = null) => {
         dispatch(getUserThunk(currentPage, pageSize, term, friend));

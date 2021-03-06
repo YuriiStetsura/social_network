@@ -7,3 +7,6 @@ export const getAuth = (state: appStateType) => {
 export const getCaptchaUrl = (state: appStateType) => {
     return state.auth.captchaUrl
 }
+export const getLogin = (state: appStateType) => {
+    return state.auth.login
+}
