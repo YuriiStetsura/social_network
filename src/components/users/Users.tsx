@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from 'antd';
 import { Avatar } from 'antd';
 import s from './users.module.css';
@@ -14,8 +14,7 @@ import {
     getfollowingUsersId
 } from '../../redux/selectors/users-selectors';
 import { unfollowThunk, followThunk } from '../../redux/users-reducer';
-import * as queryString from 'querystring'
-import { useHistory } from 'react-router';
+
 
 type PropsType = {
     pageSize: number
@@ -36,7 +35,6 @@ const Users: React.FC<PropsType> = ({term, friend, currentPage, pageSize, getUse
     const users = useSelector(getUsers)
     const isFetching =useSelector(getIsFetching)
     const followingUsersId = useSelector(getfollowingUsersId)
-    const history = useHistory()
 
 
     const dispatch = useDispatch();

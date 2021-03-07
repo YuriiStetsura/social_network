@@ -27,16 +27,16 @@ const Dialogs: React.FC<DialogsPropsType> = ({dialogs, messages, addMessage}) =>
 
     const dialogElement = dialogs.map((d) => {
         return (
-            <>
+            <div key={d.id}>
                 <Avatar  size={60} icon={<UserOutlined />} />
-                <DialogItem key={d.id} id={d.id} name={d.name} />
-            </>
+                <DialogItem  id={d.id} name={d.name} />
+            </div>
         )   
     });
 
     const messageElement = messages.map((m) => {
         return (
-            <Message id={m.id} text={m.message} />
+            <Message key={m.id} id={m.id} text={m.message} />
         )   
     });
 

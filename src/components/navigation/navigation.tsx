@@ -51,6 +51,11 @@ const Navigation: React.FC<PropsType> = (props) => {
                                 activeClassName={s.activeLink}>
                     Users</NavLink>
                 </div>
+                <div className={s.item}>
+                    <NavLink to="/chat"
+                                activeClassName={s.activeLink}>
+                    Chat</NavLink>
+                </div>
             </nav>
             <div className={s.friend}>
             {/* {props.users.map(user =>     
