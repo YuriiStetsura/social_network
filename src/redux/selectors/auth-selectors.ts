@@ -10,3 +10,6 @@ export const getCaptchaUrl = (state: appStateType) => {
 export const getLogin = (state: appStateType) => {
     return state.auth.login
 }
+export const getErrorAuth = (state: appStateType) => {
+    return state.auth.errorAuth
+}

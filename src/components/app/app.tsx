@@ -21,7 +21,7 @@ import { UsersContainerWithAuthRedirect } from '../users/usersContainer'
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { ChatPage } from '../pages/chat/chat-page';
-import Navigation from '../navigation/navigation'
+import {LoginAntDesign} from '../login/loginFormByAnt'
 
 
 const { SubMenu } = Menu;
@@ -73,11 +73,11 @@ class App extends React.Component<PropsType> {
                                           </Menu>
                                    </Sider>
                                    <Layout style={{ padding: '0 24px 24px' }}>
-                                          {/* <Breadcrumb style={{ margin: '16px 0' }}>
+                                          <Breadcrumb style={{ margin: '16px 0' }}>
                                                  <Breadcrumb.Item>Home</Breadcrumb.Item>
                                                  <Breadcrumb.Item>List</Breadcrumb.Item>
                                                  <Breadcrumb.Item>App</Breadcrumb.Item>
-                                          </Breadcrumb> */}
+                                          </Breadcrumb>
                                           <Content
                                                  className="site-layout-background"
                                                  style={{
@@ -102,7 +102,7 @@ class App extends React.Component<PropsType> {
                                                                <Route path="/users"
                                                                       render={() => <UsersContainerWithAuthRedirect />} />
                                                                <Route path="/login"
-                                                                      render={() => <Login />} />
+                                                                      render={() => <LoginAntDesign />} />
                                                                <Route path="/chat"
                                                                       render={() => <ChatPage />} />
                                                         </Switch>

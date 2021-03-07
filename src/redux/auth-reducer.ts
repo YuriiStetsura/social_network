@@ -13,6 +13,7 @@ let initialState = {
     email:null as string | null,
     isAuth: false as boolean,
     captchaUrl: null as string | null,
+    errorAuth: null as string | null
 }
 
 const authReducer = (state = initialState, action : ActionsType): initialStateType => {
@@ -20,7 +21,10 @@ const authReducer = (state = initialState, action : ActionsType): initialStateTy
         case 'AUTH/CAPTCHA_SUCCESS':
         case 'AUTH/SET_AUTH_USER_DATA': {
             return {...state, ...action.data}
-        }    
+        }  
+        case 'AUTH/ERRORS_AUTH': {
+            return {...state, errorAuth: action.error}
+        }   
         default:
             return state;
     }
@@ -38,6 +42,10 @@ export const actions = {
     setCaptcha: (captchaUrl: string | null) => ({
         type: 'AUTH/CAPTCHA_SUCCESS', data: {captchaUrl}
     } as const),
+    setErrorsAuth: (error: null | string) => ({
+        type: 'AUTH/ERRORS_AUTH',
+        error
+    } as const)
 } 
 
 //thunk type
@@ -61,7 +69,9 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
                 }
                 
                 let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some error";
-                dispatch(stopSubmit("login", {_error : message}));
+                console.log(message)
+                dispatch(actions.setErrorsAuth(message))
+                // dispatch(stopSubmit("login", {_error : message}));
             }
 } 
 export const logout = (): ThunkType => async(dispatch) => {
