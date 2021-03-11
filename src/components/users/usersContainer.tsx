@@ -26,10 +26,9 @@ const UsersContainer: React.FC = () => {
     
     useEffect(() => {
         const parsed = queryString.parse(history.location.search.substr(1))
-        
         let actualTerm = term
         let actualPage = currentPage
-        let actualFriend = friend
+        let actualFriend = friend 
         if (!!parsed.term) actualTerm = parsed.term as string
         if (!!parsed.page) actualPage = Number(parsed.page)
         if (!!parsed.friend) actualFriend = parsed.friend === "null" ? null : parsed.friend === "true" ? true : false
